@@ -1,0 +1,92 @@
+.register-container {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 80vh; /* For scrolling */
+  }
+  
+  .register-container h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .register-container p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  label {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    color: #333;
+  }
+input::placeholder {
+    color: #888; 
+  }
+  
+  input:focus::placeholder {
+    color: transparent; 
+  }
+  
+  select {
+    color: #000;
+  }
+  
+  .phone-input {
+    display: flex;
+    align-items: center;
+  }
+  
+  .phone-input select {
+    margin-right: 8px; /* Space between country code and phone number */
+  }
+  
+  
+  input[type="text"],
+  input[type="tel"],
+  select {
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .phone-input {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .continue-button {
+    padding: 12px 20px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-start;
+  }
+  
+  .continue-button:hover {
+    background-color: #0056b3;
+  }
+  
