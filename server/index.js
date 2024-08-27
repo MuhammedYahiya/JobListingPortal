@@ -1,13 +1,15 @@
 const express = require('express')
 const dotenv = require('dotenv')
-const userRout = require('./router/userRouter')
+const userRoute = require('./router/userRouter')
 const connectDatabase = require('./config/database')
 const app = express()
 
 
 dotenv.config()
 
-app.use('/api',userRout)
+app.use(express.json())
+
+app.use('/api',userRoute)
 
 connectDatabase()
 
