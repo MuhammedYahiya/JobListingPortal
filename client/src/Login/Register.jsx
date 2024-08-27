@@ -30,12 +30,12 @@ function Register() {
 
         <label>
           Your first and last name*
-          <input type="text" name="name" required placeholder="eg: Tushar Jain" />
+          <input type="text" name="name" required placeholder="eg:Fiza Khan" />
         </label>
 
         <label>
           Email Address*
-          <input type="email" name="email" required placeholder="eg: tusharJain@gmail.com" />
+          <input type="email" name="email" required placeholder="eg: fizasoorajkhan@gmail.com" />
         </label>
 
         <label>
