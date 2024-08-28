@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 import "./Register.css";
 
 function Register() {
   const search = useLocation().search;
   const role = new URLSearchParams(search).get("role");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
@@ -15,9 +19,29 @@ function Register() {
     formData.forEach((value, key) => {
       data[key] = value;
     });
+    console.log(data);
+    try {
+      // const data = await response.json();
+      const response = await axios.post("http://localhost:8000/api/register", {
+        email: data["username"],
+        password: data["password"],
+        name:data["name"],
+      });
 
-    console.log("Form Data:", data);
-    e.target.reset();
+      console.log(response.data);
+
+      if (response.status == 200) {
+        alert("User registered successfully");
+      } else {
+        alert(data.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error registering user");
+    }
+
+    navigate(`/`);
+    // e.target.reset();
   };
 
   return (
@@ -162,6 +186,19 @@ function Register() {
               />
             </div>
           </label>
+          <label>
+            Username*
+            <input
+              type="email"
+              name="username"
+              required
+              placeholder="eg: fizasoorajkhan@gmail.com"
+            />
+          </label>
+          <label>
+            Password*
+            <input type="password" name="password" required placeholder="" />
+          </label>
 
           <button type="submit" className="continue-button">
             Register
@@ -172,6 +209,7 @@ function Register() {
           <label>
             Your name*
             <input type="text" name="Name" required placeholder="eg: Enter Full Name" />
+
           </label>
 
           <label>
@@ -238,7 +276,7 @@ function Register() {
             Job Title*
             <input
               type="text"
-              name="name"
+              name="jobtitlename"
               required
               placeholder="eg: software engineer"
             />
@@ -274,6 +312,20 @@ function Register() {
           <label>
             Upload Resume
             <input type="file" name="resume" />
+          </label>
+
+          <label>
+            Username*
+            <input
+              type="email"
+              name="username"
+              required
+              placeholder="eg: fizasoorajkhan@gmail.com"
+            />
+          </label>
+          <label>
+            Password*
+            <input type="password" name="password" required placeholder="" />
           </label>
 
           <button type="submit" className="continue-button">
