@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import "./Register.css";
 
 function Register() {
   const search = useLocation().search;
   const role = new URLSearchParams(search).get("role");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,6 +20,7 @@ function Register() {
     });
 
     console.log("Form Data:", data);
+    navigate(`/`);
     e.target.reset();
   };
 
@@ -162,6 +166,19 @@ function Register() {
               />
             </div>
           </label>
+          <label>
+            Username*
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="eg: fizasoorajkhan@gmail.com"
+            />
+          </label>
+          <label>
+            Password*
+            <input type="password" name="email" required placeholder="" />
+          </label>
 
           <button type="submit" className="continue-button">
             Register
@@ -274,6 +291,20 @@ function Register() {
           <label>
             Upload Resume
             <input type="file" name="resume" />
+          </label>
+
+          <label>
+            Username*
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="eg: fizasoorajkhan@gmail.com"
+            />
+          </label>
+          <label>
+            Password*
+            <input type="password" name="email" required placeholder="" />
           </label>
 
           <button type="submit" className="continue-button">
