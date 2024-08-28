@@ -23,7 +23,7 @@ exports.registerUser = async (req, res) => {
     });
 
     await newUser.save();
-    res.status(201).json({ message: "User registration successful" });
+    res.status(200).json({ message: "User registration successful" });
   } catch (err) {
     if (err.name === "ValidationError") {
       const errors = Object.values(err.errors).map((error) => error.message);
@@ -33,3 +33,28 @@ exports.registerUser = async (req, res) => {
     res.status(500).json({ error: "Internal Server error" });
   }
 };
+
+exports.loginUser = async (req, res) => {
+
+  try {
+    const { email, password } = req.body;
+
+    // Find user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
+
+    // Check if password matches
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
+
+    res.status(200).json({ message: 'Login successful', userId: user._id });
+  } catch (error) {
+    res.status(500).json({ error: 'Error logging in' });
+  }
+};
+
+
