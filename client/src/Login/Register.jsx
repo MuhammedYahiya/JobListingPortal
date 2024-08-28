@@ -171,7 +171,7 @@ function Register() {
         <form onSubmit={handleSubmit}>
           <label>
             Your name*
-            <input type="text" name="Name" required placeholder="eg: ABC" />
+            <input type="text" name="Name" required placeholder="eg: Enter Full Name" />
           </label>
 
           <label>
