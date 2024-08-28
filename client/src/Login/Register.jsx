@@ -20,12 +20,13 @@ function Register() {
       data[key] = value;
     });
     console.log(data);
+
     try {
       // const data = await response.json();
       const response = await axios.post("http://localhost:8000/api/register", {
         email: data["username"],
         password: data["password"],
-        name:data["name"],
+        name: data["name"],
       });
 
       console.log(response.data);
