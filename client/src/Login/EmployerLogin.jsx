@@ -14,7 +14,7 @@ function EmployerLogin() {
     const password = formData.get('password');
 
     try {
-      const response = await axios.post('http://localhost:8000/api/login', {
+      const response = await axios.post('http://localhost:8000/api/employer/login', {
         email,
         password,
         role: 'employer'

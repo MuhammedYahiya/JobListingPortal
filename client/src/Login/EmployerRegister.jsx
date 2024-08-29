@@ -12,7 +12,7 @@ function EmployerRegister() {
     const data = Object.fromEntries(formData);
 
     try {
-      const response = await axios.post("http://localhost:8000/api/register", {
+      const response = await axios.post("http://localhost:8000/api/employer/register", {
         email: data.email,
         password: data.password,
         name: data.name,
