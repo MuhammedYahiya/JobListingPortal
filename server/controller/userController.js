@@ -20,6 +20,7 @@ exports.registerUser = async (req, res) => {
       name: req.body.name,
       email: req.body.email,
       password: hashPassword,
+      
     });
 
     await newUser.save();

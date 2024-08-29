@@ -1,14 +1,16 @@
 import React, { useContext } from "react";
 import { UserContext } from "./UserContext";
-import { Await, useLocation } from "react-router-dom";
+
 import { NavLink } from "react-router-dom";
-import axios from "axios";
+
+import { RiEdgeNewLine } from "react-icons/ri";
 
 const JObSeekerDash = () => {
   const { user } = useContext(UserContext);
 
   return (
     <>
+      <RiEdgeNewLine />
       <div className="flex align-top  top-0 left-0 fixed p-4">
         {`DashBoard ${user?.name}`}
       </div>
