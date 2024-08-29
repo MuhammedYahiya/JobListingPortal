@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import welcome from "../assests/Welcome.png";
+import Navbar from "./Navbar/Navbar";
 
 function Home() {
   const [role, setRole] = useState("");
@@ -19,6 +20,7 @@ function Home() {
 
   return (
     <div className="container-full">
+      <Navbar/>
       <div className="home-container">
         <h1>Welcome to Job Portal</h1>
         <img src={welcome} />
