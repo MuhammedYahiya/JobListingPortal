@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator")
 const { Schema } = mongoose;
                                     
-const userSchema = new Schema({
+const employerSchema = new Schema({
   name: {
     type: String,
     required: [true, 'Name is required'],
@@ -30,18 +30,41 @@ const userSchema = new Schema({
     type: String,
     trim: true,
   },
-  dateOfBirth: {
-    type: Date,
-  },
-  profilePicture: {
+  companyName: {
     type: String,
     trim: true,
-    default: " ",
   },
-  resume: {
+  city: {
     type: String,
     trim: true,
-    default: " ",
+  },
+  state: {
+    type: String,
+    trim: true,
+  },
+  country: {
+    type: String,
+    trim: true,
+  },
+  pincode: {
+    type: String,
+    trim: true,
+  },
+  positionType: {
+    type: String,
+    trim: true,
+  },
+  socialMediaLink: {
+    type: String,
+    trim: true,
+  },
+  hiringManager: {
+    type: String,
+    trim: true,
+  },
+  employees: {
+    type: String,
+    trim: true,
   },
   createdAt: {
     type: Date,
@@ -53,11 +76,12 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.pre('save', function(next) {
-    this.updatedAt = Date.now();
-    next();
+employerSchema.pre('save', function(next) {
+  this.updatedAt = Date.now();
+  next();
 });
 
-const User = mongoose.model('User',userSchema)
+const employer = mongoose.model('employer',employerSchema)
 
-module.exports = User
+
+module.exports = employer

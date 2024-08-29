@@ -2,29 +2,25 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import welcome from "../assests/Welcome.png";
+import Navbar from "./Navbar/Navbar";
 
 function Home() {
   const [role, setRole] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+  const handleNavigation = (action) => {
     if (!role) {
       alert("Please select a role before proceeding.");
     } else {
-      navigate(`/login?role=${role}`);
-    }
-  };
+      const path = `/${action}/${role}`;
 
-  const handleRegister = () => {
-    if (!role) {
-      alert("Please select a role before proceeding.");
-    } else {
-      navigate(`/register?role=${role}`);
+      navigate(path);
     }
   };
 
   return (
     <div className="container-full">
+      <Navbar/>
       <div className="home-container">
         <h1>Welcome to Job Portal</h1>
         <img src={welcome} />
@@ -52,10 +48,10 @@ function Home() {
           </label>
         </div>
         <div className="action-buttons">
-          <button onClick={handleLogin} disabled={!role}>
+          <button onClick={() => handleNavigation("login")} disabled={!role}>
             Login
           </button>
-          <button onClick={handleRegister} disabled={!role}>
+          <button onClick={() => handleNavigation("register")} disabled={!role}>
             Register
           </button>
         </div>
