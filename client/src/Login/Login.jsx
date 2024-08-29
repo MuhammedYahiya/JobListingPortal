@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Await, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "./UserContext";
 
 
 function Login() {
   const search = useLocation().search;
   const role = new URLSearchParams(search).get("role");
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -25,6 +27,8 @@ function Login() {
 
       if (response.status === 200) {
         alert("Login successful");
+        setUser(response.data.user);
+        console.log(response.data)
         navigate(`/dashboard/${role}`); // Navigate to the dashboard or another page
       } else {
         alert(response.data.error);
