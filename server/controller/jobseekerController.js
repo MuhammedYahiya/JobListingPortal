@@ -1,5 +1,6 @@
 const jobseeker = require("../model/jobseekerModel");
 const bcrypt = require("bcryptjs");
+const sendToken = require("../utils/jwtToken")
 
 exports.registerJobSeeker = async (req, res) => {
   try {
@@ -16,7 +17,7 @@ exports.registerJobSeeker = async (req, res) => {
 
     const hashPassword = await bcrypt.hash(req.body.password, 10);
 
-    const newUser = new jobseeker({
+    const newUser = new jobseeker({ 
       name: req.body.name,
       email: req.body.email,
       password: hashPassword,
@@ -32,7 +33,7 @@ exports.registerJobSeeker = async (req, res) => {
     });
 
     await newUser.save();
-    res.status(200).json({ message: "User registration successful" });
+    sendToken(newUser,201,res)
   } catch (err) {
     if (err.name === "ValidationError") {
       const errors = Object.values(err.errors).map((error) => error.message);
@@ -58,8 +59,8 @@ exports.loginJobSeeker = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ error: "Invalid email or password" });
     }
-
-    res.status(200).json({ message: "Login successful", user: user });
+    
+    sendToken(user, 200, res);
   } catch (error) {
     res.status(500).json({ error: "Error logging in" });
   }
