@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const userRoute = require("./router/userRouter");
+const employerRoute = require("./router/employerRouter");
+const jobseekerRoute = require("./router/jobseekerRouter");
 const connectDatabase = require("./config/database");
 const cors = require("cors");
 const app = express();
@@ -16,7 +17,8 @@ dotenv.config();
 
 app.use(express.json());
 
-app.use("/api", userRoute);
+app.use("/api", jobseekerRoute);
+app.use("/api", employerRoute);
 
 connectDatabase();
 
