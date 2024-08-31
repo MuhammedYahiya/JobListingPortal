@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator")
 const { Schema } = mongoose;
+const jwt = require('jsonwebtoken');
 
 
 const jobseekerSchema = new Schema({
@@ -55,11 +56,6 @@ const jobseekerSchema = new Schema({
       type: String,
       trim: true,
     },
-    positionType: {
-      type: String,
-      trim: true,
-    },
-    
     createdAt: {
       type: Date,
       default: Date.now,
@@ -74,6 +70,12 @@ const jobseekerSchema = new Schema({
       this.updatedAt = Date.now();
       next();
   });
+
+  jobseekerSchema.methods.getJWTToken = function (){
+    return jwt.sign({id: this._id},process.env.JWT_SECRET,{
+      expiresIn:process.env.JWT_EXPIRE,
+    });
+  };
 
   const jobseeker = mongoose.model('jobseeker',jobseekerSchema)
 
