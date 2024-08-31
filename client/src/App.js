@@ -9,6 +9,7 @@ import EmployerRegister from "./Login/EmployerRegister";
 import JobSeekerRegister from "./Login/JobSeekerRegister";
 import EmployerLogin from "./Login/EmployerLogin";
 import JobSeekerLogin from "./Login/JobSeekerLogin";
+import Search from "./jobseeker/Search";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/dashboard/employer" element={<EmployerDash />} />
           <Route path="/login/employer" element={<EmployerLogin />} />
           <Route path="/login/jobseeker" element={<JobSeekerLogin />} />
+          <Route path="/Search" element={<Search />} />
         </Routes>
       </Router>
     </>

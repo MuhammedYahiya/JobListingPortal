@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from './UserContext';
+import './JobseekerLogin.css'
 
 function JobSeekerLogin() {
   const navigate = useNavigate();
@@ -32,6 +33,9 @@ function JobSeekerLogin() {
       alert('Error logging in');
     }
   };
+  const handleContinueClick = () => {
+    navigate('/Search');
+  };
 
   return (
     <div className="container-full min-h-[100vh]">
@@ -40,8 +44,15 @@ function JobSeekerLogin() {
         <form onSubmit={handleSubmit}>
           <input type="email" name="email" placeholder="Email" required />
           <input type="password" name="password" placeholder="Password" required />
-          <button type="submit">Login</button>
+          <div className="button-container">
+
+            <button type="submit" className="login-button" onClick={handleContinueClick}>Login</button>
+
+
+
+          </div>
         </form>
+
       </div>
     </div>
   );
