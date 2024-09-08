@@ -4,14 +4,16 @@ const employerRoute = require("./router/employerRouter");
 const jobseekerRoute = require("./router/jobseekerRouter");
 const connectDatabase = require("./config/database");
 const cors = require("cors");
+const cookieParser = require('cookie-parser');
 const app = express();
 
 const corsOptions = {
   origin: "http://localhost:3000", // Allow only requests from your frontend
   optionsSuccessStatus: 200, // For legacy browser support
 };
-
+app.use(cookieParser());
 app.use(cors(corsOptions));
+
 
 dotenv.config();
 
