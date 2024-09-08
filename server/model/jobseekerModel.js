@@ -56,6 +56,11 @@ const jobseekerSchema = new Schema({
       type: String,
       trim: true,
     },
+    profilePicture: {
+      type: String,
+      trim: true,
+      default: '',
+    },
     createdAt: {
       type: Date,
       default: Date.now,
