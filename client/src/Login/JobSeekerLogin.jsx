@@ -24,7 +24,7 @@ function JobSeekerLogin() {
       if (response.status === 200) {
         alert('Job Seeker login successful');
         setUser(response.data.user);
-        navigate('/dashboard/jobseeker');
+        navigate('/dashboard/Homesearch');
       } else {
         alert(response.data.error);
       }
@@ -33,10 +33,7 @@ function JobSeekerLogin() {
       alert('Error logging in');
     }
   };
-  const handleContinueClick = () => {
-    navigate('/Homesearch');
-  };
-
+ 
   return (
     <div className="container-full min-h-[100vh]">
       <div className="login-container">
@@ -46,7 +43,7 @@ function JobSeekerLogin() {
           <input type="password" name="password" placeholder="Password" required />
           <div className="button-container">
 
-            <button type="submit" className="login-button" onClick={handleContinueClick}>Login</button>
+            <button type="submit" className="login-button" >Login</button>
 
 
 

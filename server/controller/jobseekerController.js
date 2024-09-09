@@ -47,6 +47,7 @@ exports.registerJobSeeker = async (req, res) => {
 exports.loginJobSeeker = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log(email,password);
 
     // Find user by email
     const user = await jobseeker.findOne({ email });
@@ -63,5 +64,6 @@ exports.loginJobSeeker = async (req, res) => {
     sendToken(user, 200, res);
   } catch (error) {
     res.status(500).json({ error: "Error logging in" });
+    console.log(error);
   }
 };
