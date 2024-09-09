@@ -34,7 +34,7 @@ function JobSeekerLogin() {
     }
   };
   const handleContinueClick = () => {
-    navigate('/Search');
+    navigate('/Homesearch');
   };
 
   return (
