@@ -36,7 +36,7 @@ exports.registerJobSeeker = async (req, res) => {
     });
 
     await newUser.save();
-    sendToken(newUser, 201, res);
+    sendToken(newUser, 200, res);
   } catch (err) {
     if (err.name === "ValidationError") {
       const errors = Object.values(err.errors).map((error) => error.message);
