@@ -13,15 +13,19 @@ const EmployerDash = () => {
 
   const navigate = useNavigate();
 
+  
+
   return (
     <div>
       <div>
         <ul className="flex font-semibold items-center gap-5 p-4 justify-end mr-5">
           <li>Home</li>
-          <li>Companies</li>
           <li>Jobs</li>
+          <li>Profile</li>
         </ul>
       </div>
+      
+
       <div className="flex flex-col items-center px-24 justify-center">
         <div className=" w-full my-20 p-4">
           <div className="flex flex-row justify-between ">
@@ -29,7 +33,10 @@ const EmployerDash = () => {
               className="p-3 border-gray-800 border-1"
               placeholder="Filter by name"
             />
-            <button onClick={() => navigate("/dashboard/employer/create")} className="w-[200px] bg-gray-800 text-white rounded-lg">
+            <button
+              onClick={() => navigate("/dashboard/employer/create")}
+              className="w-[200px] bg-gray-800 text-white rounded-lg"
+            >
               New Job
             </button>
           </div>
@@ -38,8 +45,8 @@ const EmployerDash = () => {
           <table className=" w-full text-center">
             <tr className="bg-slate-200 ">
               <th className="p-4">S.No</th>
-              <th>Name</th>
-              <th>Date</th>
+              <th>CompanyName</th>
+              <th>Joining-Date</th>
               <th>Action</th>
             </tr>
             <tr className="bg-white">
@@ -47,7 +54,10 @@ const EmployerDash = () => {
               <td>Google</td>
               <td>17-08-2001</td>
               <td>
-                <div className="cursor-pointer flex justify-center" onClick={togglePopover}>
+                <div
+                  className="cursor-pointer flex justify-center"
+                  onClick={togglePopover}
+                >
                   <FiAlignJustify />
                 </div>
 

@@ -1,8 +1,42 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const CompanyCreate = () => {
   const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/dashboard/employer/create",
+        {
+          companyName: data.name,
+          date: data.date,
+          title: data.title,
+          qualification: data.qualification,
+          location: data.location,
+          description: data.description,
+          responsibility: data.responsibility,
+          salary: data.salary,
+        }
+      );
+
+      if (response.status === 200) {
+        alert("Job registered successfully");
+        navigate("/dashboard/employer");
+      } else {
+        alert(response.data.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error registering job  ");
+    }
+  };
+
   return (
     <div>
       <div>
@@ -14,18 +48,58 @@ const CompanyCreate = () => {
       </div>
       <div className="max-w-4xl mx-auto">
         <div className="my-10">
-          <h1 className="font-bold text-2xl">ENTER YOUR COMPANY NAME</h1>
-          <p className="text-gray-300">You can change this later</p>
+          <h1 className="font-bold text-2xl uppercase">
+            ENTER The Job Details
+          </h1>
+          <p className="text-gray-400">You can change this later</p>
         </div>
-
-        <label>Company Name</label>
-        <input type="text" className="my-2" placeholder="Name" />
-        <label>Date</label>
-        <input type="text" className="my-2" placeholder="Date" />
-        <div className="flex flex-row items-center gap-2 my-10">
-    <div className="bg-gray-300 text-white cursor-pointer p-2" onClick={() => navigate("/dashboard/employer")}>Cancel</div>
-    <div className="bg-gray-300 text-white cursor-pointer p-2" >Continue</div>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="name">Company Name</label>
+          <input type="text" className="my-2" id="name" name="name" />
+          <label htmlFor="date">Date</label>
+          <input type="text" className="my-2" id="date" name="date" />
+          <label htmlFor="title">Job Title</label>
+          <input type="text" className="my-2" id="title" name="title" />
+          <label htmlFor="qualification">Qualifications</label>
+          <input
+            type="text"
+            className="my-2"
+            id="qualification"
+            name="qualification"
+          />
+          <label htmlFor="location">Location</label>
+          <input type="text" className="my-2" id="location" name="location" />
+          <label htmlFor="salary">Salary</label>
+          <input type="text" className="my-2" id="salary" name="salary" />
+          <label htmlFor="description">Description</label>
+          <input
+            type="text"
+            className="my-2"
+            id="description"
+            name="description"
+          />
+          <label htmlFor="responsibility">Responsibility</label>
+          <input
+            type="text"
+            className="my-2"
+            id="responsibility"
+            name="responsibility"
+          />
+          <div className="flex flex-row items-center gap-2 my-10">
+            <div
+              className="bg-gray-300 text-white cursor-pointer p-2"
+              onClick={() => navigate("/dashboard/employer")}
+            >
+              Cancel
+            </div>
+            <button
+              type="submit"
+              className="bg-gray-300 text-white cursor-pointer p-2"
+            >
+              Add JOb
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
