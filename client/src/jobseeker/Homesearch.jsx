@@ -1,6 +1,7 @@
 import React from 'react';
 import Leftsidebar from './Leftsidebar/Leftsidebar';
 import './Homesearch.css';
+import Jobcard from './Jobcard/Jobcard';
 
 function Homesearch() {
   const user = {
@@ -11,6 +12,13 @@ function Homesearch() {
     phone: "+1234567890",
     location: "New York, USA",
   };
+
+  const jobs = [
+    { id: 1, title: 'Frontend Developer', company: 'Tech Solutions', location: 'New York, USA', type: 'Full Time', experience: '0-2 years' },
+    { id: 2, title: 'Backend Developer', company: 'CodeCrafters', location: 'Pune, India', type: 'Part Time', experience: '2-4 years' },
+    { id: 3, title: 'iOS Developer', company: 'Mobile Innovators', location: 'San Francisco, USA', type: 'Contract', experience: '5-8 years' },
+    
+  ];
 
   return (
     <div className="homesearch-container">
@@ -48,6 +56,11 @@ function Homesearch() {
             </select>
             <button className="search-button">Search</button>
           </div>
+        </div>
+        <div className="job-listings">
+          {jobs.map((job) => (
+            <Jobcard key={job.id} job={job} />
+          ))}
         </div>
       </div>
     </div>
