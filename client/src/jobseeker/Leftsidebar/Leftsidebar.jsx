@@ -21,7 +21,6 @@ const Leftsidebar = ({ user }) => {
           <li><a href="/dashboard">Dashboard</a></li>
           <li><a href="/profile">Profile</a></li>
           <li><a href="/applications">Applications</a></li>
-          <li><a href="/settings">Settings</a></li>
           <li><a href="/logout">Logout</a></li>
         </ul>
       </div>
