@@ -44,6 +44,7 @@ function JobSeekerRegister() {
       <div className="register-container min-h-[100vh]">
         <h2>Job Seeker Registration</h2>
         <form onSubmit={handleSubmit}>
+          
           <label>
             Your Name*
             <input

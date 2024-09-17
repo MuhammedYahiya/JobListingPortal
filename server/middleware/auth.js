@@ -1,9 +1,10 @@
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncError = require("./catchAsyncError");
-const jwt = require('jsonwebtoken');
-const User = require("../model/jobseekerModel")
+const jwt = require("jsonwebtoken");
+const User = require("../model/jobseekerModel");
+const EmployerUser = require("../model/employerModel");
 
-exports.isAuthenticatedUser = catchAsyncError(async (req, res, next) => {
+exports.isAuthenticatedJobSeeker = catchAsyncError(async (req, res, next) => {
   const { token } = req.cookies;
 
   if (!token) {
@@ -11,9 +12,9 @@ exports.isAuthenticatedUser = catchAsyncError(async (req, res, next) => {
   }
 
   const decodedData = jwt.verify(token, process.env.JWT_SECRET);
-
-  req.user = await User.findById(decodedData.id);
-
+  req.user =
+    (await User.findById(decodedData.id)) ||
+    (await EmployerUser.findById(decodedData.id));
+    
   next();
-  
 });

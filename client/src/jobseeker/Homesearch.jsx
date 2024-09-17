@@ -1,9 +1,10 @@
-import React from 'react';
-import Leftsidebar from './Leftsidebar/Leftsidebar';
-import './Homesearch.css';
-import Jobcard from './Jobcard/Jobcard';
+import React from "react";
+import Leftsidebar from "./Leftsidebar/Leftsidebar";
+import "./Homesearch.css";
+import Jobcard from "./Jobcard/Jobcard";
 
 function Homesearch() {
+<<<<<<< Updated upstream
   const user = {
     profilePicture: "https://via.placeholder.com/80",
     name: "John Doe",
@@ -93,12 +94,38 @@ function Homesearch() {
       salary: '30000/month',
       location: 'San Francisco, CA',
       timeAgo: '1 day ago',
+=======
+  const jobs = [
+    {
+      id: 1,
+      title: "Frontend Developer",
+      company: "Tech Solutions",
+      location: "New York, USA",
+      type: "Full Time",
+      experience: "0-2 years",
+    },
+    {
+      id: 2,
+      title: "Backend Developer",
+      company: "CodeCrafters",
+      location: "Pune, India",
+      type: "Part Time",
+      experience: "2-4 years",
+    },
+    {
+      id: 3,
+      title: "iOS Developer",
+      company: "Mobile Innovators",
+      location: "San Francisco, USA",
+      type: "Contract",
+      experience: "5-8 years",
+>>>>>>> Stashed changes
     },
   ];
   return (
     <div className="homesearch-container">
-      <Leftsidebar user={user} />
-      
+      <Leftsidebar />
+
       <div className="main-content">
         <div className="search-bar">
           <h1>Your ideal job awaits, start the search</h1>

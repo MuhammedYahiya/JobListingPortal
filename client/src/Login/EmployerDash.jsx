@@ -4,8 +4,12 @@ import { FiAlignJustify } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 
+
+
 const EmployerDash = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+  
 
   const togglePopover = () => {
     setIsPopoverOpen(!isPopoverOpen);
@@ -13,15 +17,21 @@ const EmployerDash = () => {
 
   const navigate = useNavigate();
 
+  const onHandleClick = () => {
+    navigate("/dashboard/employer/profile");
+  }
+
+  
+
   
 
   return (
     <div>
       <div>
         <ul className="flex font-semibold items-center gap-5 p-4 justify-end mr-5">
-          <li>Home</li>
-          <li>Jobs</li>
-          <li>Profile</li>
+          <li className="hover:cursor-pointer hover:text-xl " >Home</li>
+          <li className="hover:cursor-pointer hover:text-xl " >Jobs</li>
+          <li className="hover:cursor-pointer hover:text-xl " onClick={onHandleClick}>Profile</li>
         </ul>
       </div>
       
