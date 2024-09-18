@@ -1,5 +1,6 @@
 const employer = require("../model/employerModel");
 const bcrypt = require("bcryptjs");
+const sendToken = require("../utils/jwtToken");
 
 exports.registerEmployer = async (req, res) => {
   try {
@@ -31,6 +32,7 @@ exports.registerEmployer = async (req, res) => {
       hiringManager: req.body.hiringManager,
       phone: req.body.phone,
       employees: req.body.employees,
+      image : req.body.image,
     });
 
     await newUser.save();
@@ -61,8 +63,9 @@ exports.loginEmployer = async (req, res) => {
       return res.status(400).json({ error: "Invalid email or password" });
     }
 
-    res.status(200).json({ message: "Login successful", user: user });
+    sendToken(user, 200, res);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: "Error logging in" });
   }
 };

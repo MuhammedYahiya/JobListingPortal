@@ -1,4 +1,8 @@
+//this component is not getting used anywhere
+
 import React, { useContext } from "react";
+
+
 import { UserContext } from "./UserContext";
 
 import { NavLink } from "react-router-dom";

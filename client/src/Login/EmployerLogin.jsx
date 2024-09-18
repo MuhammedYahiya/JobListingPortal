@@ -18,6 +18,8 @@ function EmployerLogin() {
         email,
         password,
         role: 'employer'
+      },{
+        withCredentials:true 
       });
 
       if (response.status === 200) {
