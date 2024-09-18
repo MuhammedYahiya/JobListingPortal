@@ -1,5 +1,6 @@
 import { UserContext } from "../../Login/UserContext";
 import { useContext } from "react";
+import { NavLink } from "react-router-dom";
 
 import React from "react";
 import "./Leftsidebar.css";
@@ -26,21 +27,10 @@ const Leftsidebar = () => {
       <div className="sidebar-links">
         <ul>
 
-          <li>
-            <a href="/dashboard">Dashboard</a>
-          </li>
-          <li>
-            <a href="/profile">Profile</a>
-          </li>
-          <li>
-            <a href="/applications">Applications</a>
-          </li>
-          <li>
-            <a href="/settings">Settings</a>
-          </li>
-          <li>
-            <a href="/logout">Logout</a>
-          </li>
+        <li><NavLink to="/dashboard">Dashboard</NavLink></li>
+          <li><NavLink to="/profile">Profile</NavLink></li>
+          <li><NavLink to="/applications">Applications</NavLink></li>
+          <li><NavLink to="/logout">Logout</NavLink></li>
 
         </ul>
       </div>
