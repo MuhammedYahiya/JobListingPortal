@@ -4,98 +4,7 @@ import "./Homesearch.css";
 import Jobcard from "./Jobcard/Jobcard";
 
 function Homesearch() {
-<<<<<<< Updated upstream
-  const user = {
-    profilePicture: "https://via.placeholder.com/80",
-    name: "John Doe",
-    role: "Job Seeker",
-    email: "john.doe@example.com",
-    phone: "+1234567890",
-    location: "New York, USA",
-  };
-
   const jobData = [
-    {
-      logo: 'logo-url-1',
-      company: 'Amazon',
-      title: 'Senior UI/UX Designer',
-      type: 'Part-time',
-      schedule: 'Senior level',
-      salary: '30000',
-      location: 'San Francisco, CA',
-      timeAgo: '1 day ago',
-    },
-    {
-      logo: 'logo-url-1',
-      company: 'Amazon',
-      title: 'Senior UI/UX Designer',
-      type: 'Part-time',
-      schedule: 'Senior level',
-      salary: '30000',
-      location: 'San Francisco, CA',
-      timeAgo: '1 day ago',
-    },
-    {
-      logo: 'logo-url-1',
-      company: 'Amazon',
-      title: 'Senior UI/UX Designer',
-      type: 'Part-time',
-      schedule: 'Senior level',
-      salary: '30000',
-      location: 'San Francisco, CA',
-      timeAgo: '1 day ago',
-    },
-    {
-      logo: 'logo-url-1',
-      company: 'Amazon',
-      title: 'Senior UI/UX Designer',
-      type: 'Part-time',
-      schedule: 'Senior level',
-      salary: '30000',
-      location: 'San Francisco, CA',
-      timeAgo: '1 day ago',
-    },
-    {
-      logo: 'logo-url-1',
-      company: 'Amazon',
-      title: 'Senior UI/UX Designer',
-      type: 'Part-time',
-      schedule: 'Senior level',
-      salary: '30000',
-      location: 'San Francisco, CA',
-      timeAgo: '1 day ago',
-    },
-    {
-      logo: 'logo-url-1',
-      company: 'Amazon',
-      title: 'Senior UI/UX Designer',
-      type: 'Part-time',
-      schedule: 'Senior level',
-      salary: '30000',
-      location: 'San Francisco, CA',
-      timeAgo: '1 day ago',
-    },
-    {
-      logo: 'logo-url-1',
-      company: 'Amazon',
-      title: 'Senior UI/UX Designer',
-      type: 'Part-time',
-      schedule: 'Senior level',
-      salary: '30000/month',
-      location: 'San Francisco, CA',
-      timeAgo: '1 day ago',
-    },
-    {
-      logo: 'logo-url-1',
-      company: 'Amazon',
-      title: 'Senior UI/UX Designer',
-      type: 'Part-time',
-      schedule: 'Senior level',
-      salary: '30000/month',
-      location: 'San Francisco, CA',
-      timeAgo: '1 day ago',
-=======
-  const jobs = [
     {
       id: 1,
       title: "Frontend Developer",
@@ -119,7 +28,6 @@ function Homesearch() {
       location: "San Francisco, USA",
       type: "Contract",
       experience: "5-8 years",
->>>>>>> Stashed changes
     },
   ];
   return (
