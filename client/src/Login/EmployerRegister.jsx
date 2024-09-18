@@ -2,8 +2,25 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Register.css";
+import { useState } from "react";
 
 function EmployerRegister() {
+
+  const [imageBase64, setImageBase64] = useState("");
+
+  // Convert the image to Base64 when selected
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageBase64(reader.result); // Set the image in Base64 format
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -27,6 +44,7 @@ function EmployerRegister() {
         hiringManager: data.hiringManager,
         phone: data.phone,
         employees: data.employees,
+         image: imageBase64,
       });
 
       if (response.status === 200) {
@@ -46,6 +64,10 @@ function EmployerRegister() {
       <div className="register-container min-h-[100vh]">
         <div className="text-2xl">Employer Registration</div>
         <form onSubmit={handleSubmit}>
+        <label>
+            Your Profile Pic to be displayed
+            <input type="file" name="image" onChange={handleImageChange} required />
+          </label>
           <label>
             Company Name*
             <input

@@ -1,30 +1,37 @@
 const mongoose = require("mongoose");
-const validator = require("validator")
+const validator = require("validator");
+const jwt = require('jsonwebtoken');
 const { Schema } = mongoose;
-                                    
+
 const employerSchema = new Schema({
   name: {
     type: String,
-    required: [true, 'Name is required'],
+    required: [true, "Name is required"],
     trim: true,
   },
-  
+
+  image: {
+    type: String,
+    required: [true, "image is required"],
+    trim: true,
+  },
+
   email: {
     type: String,
-    required: [true, 'Email is required'],
+    required: [true, "Email is required"],
     unique: true,
     trim: true,
-    validate: [validator.isEmail, 'Invalid email address'],
+    validate: [validator.isEmail, "Invalid email address"],
   },
   password: {
     type: String,
-    required: [true, 'Please enter your password'],
-    minLength: [8, 'Password should be at least 8 characters']
+    required: [true, "Please enter your password"],
+    minLength: [8, "Password should be at least 8 characters"],
   },
   phone: {
     type: String,
     trim: true,
-    match: [/^\d{10}$/, 'Phone number must me 10 digit'],
+    match: [/^\d{10}$/, "Phone number must me 10 digit"],
   },
   address: {
     type: String,
@@ -76,12 +83,17 @@ const employerSchema = new Schema({
   },
 });
 
-employerSchema.pre('save', function(next) {
+employerSchema.pre("save", function (next) {
   this.updatedAt = Date.now();
   next();
 });
 
-const employer = mongoose.model('employer',employerSchema)
+employerSchema.methods.getJWTToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE,
+  });
+};
 
+const employer = mongoose.model("employer", employerSchema);
 
-module.exports = employer
+module.exports = employer;
