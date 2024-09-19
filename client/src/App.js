@@ -11,25 +11,39 @@ import EmployerLogin from "./Login/EmployerLogin";
 import JobSeekerLogin from "./Login/JobSeekerLogin";
 import Homesearch from "./jobseeker/Homesearch";
 import CompanyCreate from "./Login/CompanyCreate";
+import EmployerProfile from "./Login/EmployerProfile";
+import { AuthorisedRoute } from "./Login/UserContext";
 
 function App() {
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
+      <Routes>
+        <Route path="/" element={<Home />} />
 
-          <Route path="/register/employer" element={<EmployerRegister />} />
-          <Route path="/register/jobseeker" element={<JobSeekerRegister />} />
-          {/* <Route path="/dashboard/jobseeker" element={<JObSeekerDash />} /> */}
-          <Route path="/dashboard/employer" element={<EmployerDash />} />
-          <Route path="/login/employer" element={<EmployerLogin />} />
-          <Route path="/login/jobseeker" element={<JobSeekerLogin />} />
-          <Route path="/dashboard/Homesearch" element={<Homesearch />} />
-          <Route path="/dashboard/employer/create" element={<CompanyCreate />} />
+        <Route path="/register/employer" element={<EmployerRegister />} />
+        <Route path="/register/jobseeker" element={<JobSeekerRegister />} />
+        {/* <Route path="/dashboard/jobseeker" element={<JObSeekerDash />} /> */}
+        <Route path="/login/employer" element={<EmployerLogin />} />
+        <Route path="/login/jobseeker" element={<JobSeekerLogin />} />
 
-        </Routes>
-      </Router>
+        <Route
+          path="/dashboard/employer"
+          element={<AuthorisedRoute element={<EmployerDash />} />}
+        />
+        <Route
+          path="/dashboard/Homesearch"
+          element={<AuthorisedRoute element={<Homesearch />} />}
+        />
+
+        <Route
+          path="/dashboard/employer/create"
+          element={<AuthorisedRoute element={<CompanyCreate />} />}
+        />
+        <Route
+          path="/dashboard/employer/profile"
+          element={<AuthorisedRoute element={<EmployerProfile />} />}
+        />
+      </Routes>
     </>
   );
 }
