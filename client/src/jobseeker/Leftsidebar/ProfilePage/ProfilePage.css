@@ -1,0 +1,56 @@
+.profile-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .profile-header {
+    margin-bottom: 100px;
+  }
+  .profile-header h1 {
+    font-size: 2rem; 
+    font-weight: bold; /* Bold font */
+  }
+  
+  .details-section strong {
+    font-weight: bold; /* Make labels bolder */
+  }
+  
+  
+  .profile-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .about-section,
+  .details-section {
+    flex: 1;
+  }
+  
+  .profile-image-container img {
+    border-radius: 50%;
+    max-width: 150px;
+  }
+  
+  input,
+  textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+  }
+  
+  button.save-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button.save-button:hover {
+    background-color: #45a049;
+  }
+  

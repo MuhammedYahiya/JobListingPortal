@@ -10,6 +10,11 @@ function JobSeekerRegister() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
+    const fileInput = e.target.elements.profilePhoto;
+
+    if (fileInput && fileInput.files.length > 0) {
+      formData.append("profilePhoto", fileInput.files[0]);
+    }
 
     try {
       const response = await axios.post("http://localhost:8000/api/jobseeker/register", {
@@ -44,7 +49,13 @@ function JobSeekerRegister() {
       <div className="register-container min-h-[100vh]">
         <h2>Job Seeker Registration</h2>
         <form onSubmit={handleSubmit}>
-          
+
+          <label>
+            Profile Photo
+            <input type="file" name="profilePhoto" accept="image/*" />
+          </label>
+
+
           <label>
             Your Name*
             <input
