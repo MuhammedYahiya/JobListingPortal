@@ -2,11 +2,16 @@ const express = require("express");
 const {
   registerEmployer,
   loginEmployer,
+  updateEmployerProfile,
 } = require("../controller/employerController");
-
+const { isAuthenticatedEmployer } = require("../middleware/auth");
+const upload = require('../config/multerConfig');
 const router = express.Router();
 
-router.route("/employer/register").post(registerEmployer);
+router.route("/employer/register").post(upload.single('profilePicture'), registerEmployer);
 router.route("/employer/login").post(loginEmployer);
+router.route("/employer/update").put(isAuthenticatedEmployer,upload.single('profilePicture'), updateEmployerProfile);
+
+
 
 module.exports = router;

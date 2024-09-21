@@ -9,7 +9,7 @@ exports.registerEmployer = async (req, res) => {
   try {
     const existingUser = await employer.findOne({ email: req.body.email });
     if (existingUser) {
-      return res.status(409).json({ error: "Email id is already existing" });
+      return res.status(409).json({ error: "Email is already registered" });
     }
 
     if (req.body.password.length < 8) {
@@ -19,6 +19,17 @@ exports.registerEmployer = async (req, res) => {
     }
 
     const hashPassword = await bcrypt.hash(req.body.password, 10);
+
+    let profilePictureUrl = null;
+    if (req.file) {
+      try {
+        const result = await cloudinary.uploader.upload(req.file.path);
+        profilePictureUrl = result.secure_url;
+        fs.unlinkSync(req.file.path); 
+      } catch (cloudinaryError) {
+        return res.status(500).json({ error: "Error uploading profile picture" });
+      }
+    }
 
     const newUser = new employer({
       name: req.body.name,
@@ -35,11 +46,12 @@ exports.registerEmployer = async (req, res) => {
       hiringManager: req.body.hiringManager,
       phone: req.body.phone,
       employees: req.body.employees,
-      image : req.body.image,
+      profilePicture: profilePictureUrl, 
     });
 
+
     await newUser.save();
-    res.status(200).json({ message: "User registration successful" });
+    sendToken(newUser, 200, res);
   } catch (err) {
     if (err.name === "ValidationError") {
       const errors = Object.values(err.errors).map((error) => error.message);
@@ -50,17 +62,16 @@ exports.registerEmployer = async (req, res) => {
   }
 };
 
+
 exports.loginEmployer = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Find user by email
     const user = await employer.findOne({ email });
     if (!user) {
       return res.status(400).json({ error: "Invalid email or password" });
     }
 
-    // Check if password matches
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ error: "Invalid email or password" });
@@ -75,7 +86,7 @@ exports.loginEmployer = async (req, res) => {
 
 exports.updateEmployerProfile = async (req, res) => {
   try {
-    const userId = req.user.id; // Assuming you're using some authentication middleware to attach the user's ID to the request
+    const userId = req.user.id; 
 
     const {
       email,
@@ -121,15 +132,14 @@ exports.updateEmployerProfile = async (req, res) => {
       }
     }
 
-    // Remove undefined fields from the updateData object
     Object.keys(updateData).forEach(
       (key) => updateData[key] === undefined && delete updateData[key]
     );
 
-    // Find the employer by ID and update their profile
+    
     const updatedEmployer = await employer.findByIdAndUpdate(userId, updateData, {
       new: true,
-      runValidators: true, // Ensures the updated data is validated
+      runValidators: true, 
     });
 
     if (!updatedEmployer) {

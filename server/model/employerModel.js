@@ -10,7 +10,7 @@ const employerSchema = new Schema({
     trim: true,
   },
 
-  image: {
+  profilePicture: {
     type: String,
     required: [true, "image is required"],
     trim: true,
