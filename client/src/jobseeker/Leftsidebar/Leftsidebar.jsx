@@ -27,8 +27,8 @@ const Leftsidebar = () => {
       <div className="sidebar-links">
         <ul>
 
-        <li><NavLink to="/dashboard">Dashboard</NavLink></li>
-          <li><NavLink to="/profile">Profile</NavLink></li>
+        <li><NavLink to="/dashboard/Homesearch">Dashboard</NavLink></li>
+          <li><NavLink to="/dashboard/Homesearch/profile">Profile</NavLink></li>
           <li><NavLink to="/applications">Applications</NavLink></li>
           <li><NavLink to="/logout">Logout</NavLink></li>
 

@@ -1,0 +1,74 @@
+.profile-page-container {
+    display: flex;
+    height: 100vh; /* Full height of the viewport */
+  }
+  
+  .left-sidebar {
+    width: 250px; /* Fixed width for sidebar */
+    background-color: #f8f9fa; /* Light background */
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sidebar shadow */
+  }
+  
+  .profile-container {
+    flex: 1; /* Takes up remaining space */
+    padding: 20px;
+    overflow-y: auto; /* Enable scrolling if content exceeds height */
+  }
+  
+  .profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .profile-header {
+    margin-bottom: 100px;
+  }
+  .profile-header h1 {
+    font-size: 2rem; 
+    font-weight: bold; /* Bold font */
+  }
+  
+  .details-section strong {
+    font-weight: bold; /* Make labels bolder */
+  }
+  
+  
+  .profile-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .about-section,
+  .details-section {
+    flex: 1;
+  }
+  
+  .profile-image-container img {
+    border-radius: 50%;
+    max-width: 150px;
+  }
+  
+  input,
+  textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+  }
+  
+  button.save-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button.save-button:hover {
+    background-color: #45a049;
+  }
+  
