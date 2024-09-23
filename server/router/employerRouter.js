@@ -5,6 +5,7 @@ const {
   updateEmployerProfile,
   createJob,
   getEmployerJobs,
+  editJob,
 } = require("../controller/employerController");
 const { isAuthenticatedEmployer } = require("../middleware/auth");
 const upload = require('../config/multerConfig');
@@ -15,6 +16,7 @@ router.route("/employer/login").post(loginEmployer);
 router.route("/employer/update").put(isAuthenticatedEmployer,upload.single('profilePicture'), updateEmployerProfile);
 
 router.route("/employer/job/create").post(isAuthenticatedEmployer, createJob);
+router.route("/employer/job/edit/:jobId").put(isAuthenticatedEmployer, editJob);
 router.route("/employer/jobs").get(isAuthenticatedEmployer, getEmployerJobs);
 
 

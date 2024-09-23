@@ -3,6 +3,7 @@ const sendToken = require("../utils/jwtToken");
 const cloudinary = require("../config/cloudinary");
 const fs = require("fs");
 const jobseeker = require("../model/jobseekerModel");
+const Job = require('../model/jobs');
 
 exports.registerJobSeeker = async (req, res) => {
   try {
@@ -144,5 +145,28 @@ exports.updateProfile = async (req, res) => {
   } catch (error) {
     console.error("Server error:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+
+exports.getAllJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find().populate('employer', 'name companyName');
+    res.status(200).json({ success: true, jobs });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+exports.getJobById = async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.jobId).populate('employer', 'name companyName');
+    if (!job) {
+      return res.status(404).json({ success: false, error: 'Job not found' });
+    }
+    res.status(200).json({ success: true, job });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
   }
 };
