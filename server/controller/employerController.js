@@ -4,6 +4,7 @@ const cloudinary = require("../config/cloudinary");
 const fs = require("fs");
 const sendToken = require("../utils/jwtToken");
 const Job = require('../model/jobs');
+const Application = require("../model/application");
 
 exports.registerEmployer = async (req, res) => {
   try {
@@ -186,6 +187,36 @@ exports.editJob = async (req, res) => {
       return res.status(404).json({ success: false, error: 'Job not found or you are not authorized to edit this job' });
     }
     res.status(200).json({ success: true, job });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+
+exports.getAppliedCandidates = async (req, res) => {
+  try {
+    const applications = await Application.find({ job: req.params.jobId })
+      .populate('jobseeker', 'name email')
+      .populate('job', 'title');
+    res.status(200).json({ success: true, applications });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+
+exports.updateApplicationStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const application = await Application.findByIdAndUpdate(
+      req.params.applicationId,
+      { status },
+      { new: true }
+    );
+    if (!application) {
+      return res.status(404).json({ success: false, error: 'Application not found' });
+    }
+    res.status(200).json({ success: true, application });
   } catch (error) {
     res.status(400).json({ success: false, error: error.message });
   }
