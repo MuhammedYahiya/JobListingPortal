@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const cloudinary = require("../config/cloudinary");
 const fs = require("fs");
 const sendToken = require("../utils/jwtToken");
-
+const Job = require('../model/jobs');
 
 exports.registerEmployer = async (req, res) => {
   try {
@@ -153,5 +153,24 @@ exports.updateEmployerProfile = async (req, res) => {
   } catch (error) {
     console.error("Server error:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+exports.createJob = async (req, res) => {
+  try {
+    const job = await Job.create({ ...req.body, employer: req.user._id });
+    res.status(201).json({ success: true, job });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+}
+
+exports.getEmployerJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find({ employer: req.user._id });
+    res.status(200).json({ success: true, jobs });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
   }
 };
