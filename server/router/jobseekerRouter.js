@@ -5,6 +5,8 @@ const {
   updateProfile,
   getAllJobs,
   getJobById,
+  applyForJob,
+  getAppliedJobs,
 } = require("../controller/jobseekerController");
 const { isAuthenticatedJobSeeker } = require("../middleware/auth");
 const upload = require('../config/multerConfig'); 
@@ -16,5 +18,8 @@ router.route("/jobseeker/update").put(isAuthenticatedJobSeeker, upload.single('p
 
 router.route("/jobs").get(getAllJobs);
 router.route("/job/:jobId").get(getJobById);
+
+router.route("/jobseeker/job/:jobId/apply").post(isAuthenticatedJobSeeker, upload.single('resume'), applyForJob);
+router.route("/jobseeker/applications").get(isAuthenticatedJobSeeker, getAppliedJobs);
 
 module.exports = router;
