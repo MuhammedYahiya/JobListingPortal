@@ -43,6 +43,11 @@ const jobSchema = new Schema({
       required: [true, 'Salary information is required'],
       trim: true,
     },
+    employer: {
+      type: Schema.Types.ObjectId,
+      ref: 'employer', 
+      required: true,
+    },
     createdAt: {
       type: Date,
       default: Date.now,
