@@ -174,3 +174,19 @@ exports.getEmployerJobs = async (req, res) => {
     res.status(400).json({ success: false, error: error.message });
   }
 };
+
+exports.editJob = async (req, res) => {
+  try {
+    const job = await Job.findOneAndUpdate(
+      { _id: req.params.jobId, employer: req.user._id },
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!job) {
+      return res.status(404).json({ success: false, error: 'Job not found or you are not authorized to edit this job' });
+    }
+    res.status(200).json({ success: true, job });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
