@@ -26,9 +26,6 @@ app.use(express.json());
 app.use("/api", jobseekerRoute);
 app.use("/api", employerRoute);
 
-app.get("/api/verify-token", isAuthenticatedJobSeeker, (req, res) => {
-  return res.json({ user: req.user });
-});
 
 connectDatabase();
 

@@ -24,5 +24,12 @@ router.route("/employer/jobs").get(isAuthenticatedEmployer, getEmployerJobs);
 router.route("/employer/job/:jobId/candidates").get(isAuthenticatedEmployer, getAppliedCandidates);
 router.route("/employer/application/:applicationId/status").put(isAuthenticatedEmployer, updateApplicationStatus);
 
+router.route("/employer/verify-token").get(isAuthenticatedEmployer, (req, res) => {
+  res.status(200).json({
+    success: true,
+    user: req.user,
+  });
+});
+
 
 module.exports = router;

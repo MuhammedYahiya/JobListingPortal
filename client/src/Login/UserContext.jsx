@@ -22,7 +22,7 @@ export const AuthorisedRoute = ({ element }) => {
     const verify = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get("http://localhost:8000/api/verify-token", {
+        const response = await axios.get("http://localhost:8000/api/employer/verify-token", {
           withCredentials: true,
         });
         setUser(response.data.user);
