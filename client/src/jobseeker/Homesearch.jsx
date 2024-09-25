@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Leftsidebar from "./Leftsidebar/Leftsidebar";
 import "./Homesearch.css";
-import Jobcard from "./Jobcard/Jobcard";
 import axios from "axios";
 
 function Homesearch() {
@@ -13,6 +12,8 @@ function Homesearch() {
   });
 
   const [jobs, setJobs] = useState([]);
+  const [appliedJobs, setAppliedJobs] = useState({}); // State to track applied jobs
+  const [resumeFile, setResumeFile] = useState(null); // State to store the selected resume file
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -34,6 +35,33 @@ function Homesearch() {
       ...filters,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleFileChange = (e) => {
+    setResumeFile(e.target.files[0]); // Store the selected file in state
+  };
+
+  const handleApply = async (jobId) => {
+    if (!resumeFile) {
+      alert("Please select a resume file before applying.");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('resume', resumeFile); // Append the resume file
+
+      // Make the API call to apply for the job
+      await axios.post(`http://localhost:8000/api/jobseeker/job/${jobId}/apply`, formData, {
+        withCredentials: true,
+      });
+
+      // Update the appliedJobs state to reflect that this job has been applied for
+      setAppliedJobs((prev) => ({ ...prev, [jobId]: true }));
+      setResumeFile(null); // Reset resume file after successful application
+    } catch (error) {
+      console.error("Error applying for the job", error);
+    }
   };
 
   const filteredJobs = jobs.filter((job) => {
@@ -137,8 +165,20 @@ function Homesearch() {
                 <strong>Responsibility: </strong>
                 {job.responsibility}
               </p>
-              <button className="bg-green-500 text-white p-2 mt-4 rounded-lg">
-                APPLY
+
+              {/* File input for resume */}
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx"
+                onChange={handleFileChange} // Update resume file on change
+                className="mb-4"
+              />
+              <button
+                className="bg-green-500 text-white p-2 mt-4 rounded-lg"
+                onClick={() => handleApply(job._id)} // Apply when button clicked
+                disabled={appliedJobs[job._id]} // Disable button if already applied
+              >
+                {appliedJobs[job._id] ? "APPLIED" : "APPLY"} {/* Change button text based on application status */}
               </button>
             </div>
           ))}
