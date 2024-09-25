@@ -9,7 +9,7 @@ function Navbar() {
       <div className="logo">
           
       <img src={logo} style={{ height: '70px', width: 'auto' }}/></div>
-      <p>JobGenie</p>
+      <p className='text-green-500 font-bold'>JobGenie</p>
     </nav>
   );
 }

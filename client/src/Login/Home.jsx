@@ -22,7 +22,7 @@ function Home() {
     <div className="container-full">
       <Navbar/>
       <div className="home-container">
-        <h1>Welcome to Job Portal</h1>
+        <h1>Welcome to Job Genie</h1>
         <img src={welcome} />
 
         <div className="role-selector">
