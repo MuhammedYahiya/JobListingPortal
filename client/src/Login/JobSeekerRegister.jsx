@@ -11,10 +11,17 @@ function JobSeekerRegister() {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
     const fileInput = e.target.elements.profilePhoto;
+    const resumeInput = e.target.elements.resume;
+
 
     if (fileInput && fileInput.files.length > 0) {
       formData.append("profilePhoto", fileInput.files[0]);
     }
+
+    if (resumeInput && resumeInput.files.length > 0) {
+      formData.append("resume", resumeInput.files[0]);
+    }
+
 
     try {
       const response = await axios.post("http://localhost:8000/api/jobseeker/register", {
@@ -106,6 +113,8 @@ function JobSeekerRegister() {
             />
           </label>
 
+
+
           <label>
             Years of Experience
             <select name="experience">
@@ -153,6 +162,12 @@ function JobSeekerRegister() {
               placeholder="e.g., jane@example.com"
             />
           </label>
+
+          <label>
+            Resume
+            <input type="file" name="resume" accept=".pdf,.doc,.docx" />
+          </label>
+          
           <label>
             Password*
             <input type="password" name="password" required />
