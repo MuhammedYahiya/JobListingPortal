@@ -16,8 +16,8 @@ router.route("/jobseeker/register").post(registerJobSeeker);
 router.route("/jobseeker/login").post(loginJobSeeker);
 router.route("/jobseeker/update").put(isAuthenticatedJobSeeker, upload.single('profilePicture'), updateProfile)
 
-router.route("/jobs").get(getAllJobs);
-router.route("/job/:jobId").get(getJobById);
+router.route("/jobs").get(isAuthenticatedJobSeeker,getAllJobs);
+router.route("/job/:jobId").get(isAuthenticatedJobSeeker,getJobById);
 
 router.route("/jobseeker/job/:jobId/apply").post(isAuthenticatedJobSeeker, upload.single('resume'), applyForJob);
 router.route("/jobseeker/applications").get(isAuthenticatedJobSeeker, getAppliedJobs);

@@ -9,9 +9,9 @@ const jobSchema = new Schema({
       trim: true,
     },
     date: {
-      type: Date,
+      type: String,
       required: [true, 'Job posting date is required'],
-      default: Date.now,
+      default: () => new Date().toLocaleDateString('en-GB'),
     },
     title: {
       type: String,

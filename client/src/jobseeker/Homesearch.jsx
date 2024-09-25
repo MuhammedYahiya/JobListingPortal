@@ -1,14 +1,14 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import Leftsidebar from "./Leftsidebar/Leftsidebar";
 import "./Homesearch.css";
 import Jobcard from "./Jobcard/Jobcard";
 
 function Homesearch() {
   const [filters, setFilters] = useState({
-    jobRole: '',
-    jobType: '',
-    location: '',
-    experience: '',
+    jobRole: "",
+    jobType: "",
+    location: "",
+    experience: "",
   });
 
   const jobData = [
@@ -62,10 +62,11 @@ function Homesearch() {
           <h1>Your ideal job awaits, start the search</h1>
           <p>Get the latest job openings that best suit you!</p>
           <div className="search-controls">
-            <select className="search-dropdown"
-            name="jobRole"
-            value={filters.jobRole}
-            onChange={handleFilterChange}
+            <select
+              className="search-dropdown"
+              name="jobRole"
+              value={filters.jobRole}
+              onChange={handleFilterChange}
             >
               <option>Job role</option>
               <option>Frontend Developer</option>
@@ -74,27 +75,33 @@ function Homesearch() {
               <option>Android Developer</option>
               <option>Developer Advocate</option>
             </select>
-            <select className="search-dropdown"
-            name="jobType"
-            value={filters.jobType}
-            onChange={handleFilterChange}>
+            <select
+              className="search-dropdown"
+              name="jobType"
+              value={filters.jobType}
+              onChange={handleFilterChange}
+            >
               <option>Job Type</option>
               <option>Full time</option>
               <option>Part time</option>
             </select>
-            <select className="search-dropdown"
-            name="location"
-            value={filters.location}
-            onChange={handleFilterChange}>
+            <select
+              className="search-dropdown"
+              name="location"
+              value={filters.location}
+              onChange={handleFilterChange}
+            >
               <option>Location</option>
               <option>Delhi</option>
               <option>Pune</option>
               <option>Bangalore</option>
             </select>
-            <select className="search-dropdown"
-            name="experience"
-            value={filters.experience}
-            onChange={handleFilterChange}>
+            <select
+              className="search-dropdown"
+              name="experience"
+              value={filters.experience}
+              onChange={handleFilterChange}
+            >
               <option>Experience</option>
               <option>0-2 years</option>
               <option>3-5 years</option>

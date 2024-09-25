@@ -44,7 +44,7 @@ function EmployerRegister() {
         hiringManager: data.hiringManager,
         phone: data.phone,
         employees: data.employees,
-         image: imageBase64,
+        profilePicture: imageBase64,
       });
 
       if (response.status === 200) {
@@ -66,7 +66,7 @@ function EmployerRegister() {
         <form onSubmit={handleSubmit}>
         <label>
             Your Profile Pic to be displayed
-            <input type="file" name="image" onChange={handleImageChange} required />
+            <input type="file" name="profilePicture" onChange={handleImageChange} required />
           </label>
           <label>
             Company Name*

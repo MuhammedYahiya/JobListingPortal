@@ -14,6 +14,7 @@ import CompanyCreate from "./Login/CompanyCreate";
 import EmployerProfile from "./Login/EmployerProfile";
 import { AuthorisedRoute } from "./Login/UserContext";
 import ProfilePage from "./jobseeker/Leftsidebar/ProfilePage/ProfilePage";
+import EmployerProfileJobs from "./Login/EmployerProfileJobs";
 
 function App() {
   return (
@@ -44,11 +45,16 @@ function App() {
           path="/dashboard/employer/profile"
           element={<AuthorisedRoute element={<EmployerProfile />} />}
         />
+
         <Route
-  path="/dashboard/Homesearch/profile"
-  element={<AuthorisedRoute element={<ProfilePage />} />}
-/>
-        
+          path="/dashboard/employer/jobs"
+          element={<AuthorisedRoute element={<EmployerProfileJobs />} />}
+        />
+
+        <Route
+          path="/dashboard/Homesearch/profile"
+          element={<AuthorisedRoute element={<ProfilePage />} />}
+        />
       </Routes>
     </>
   );
