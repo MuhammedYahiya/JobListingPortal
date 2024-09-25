@@ -41,9 +41,9 @@ const ProfilePage = () => {
       <div className="profile-container">
         <div className="profile-header">
           <h1>Profile</h1>
-          <button onClick={() => setIsEditing(!isEditing)}>
+          {/* <button onClick={() => setIsEditing(!isEditing)}>
             {isEditing ? "Cancel" : "Edit Profile"}
-          </button>
+          </button> */}
         </div>
 
         <div className="flex flex-col bg-gray-100 min-h-screen py-10 px-4">
