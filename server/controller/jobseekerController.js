@@ -3,6 +3,8 @@ const sendToken = require("../utils/jwtToken");
 const cloudinary = require("../config/cloudinary");
 const fs = require("fs");
 const jobseeker = require("../model/jobseekerModel");
+const Job = require('../model/jobs');
+const Application = require('../model/application');
 
 exports.registerJobSeeker = async (req, res) => {
   try {
@@ -144,5 +146,70 @@ exports.updateProfile = async (req, res) => {
   } catch (error) {
     console.error("Server error:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+
+exports.getAllJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find().populate('employer', 'name companyName');
+    res.status(200).json({ success: true, jobs });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+exports.getJobById = async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.jobId).populate('employer', 'name companyName');
+    if (!job) {
+      return res.status(404).json({ success: false, error: 'Job not found' });
+    }
+    res.status(200).json({ success: true, job });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+exports.applyForJob = async (req, res) => {
+  try {
+    const existingApplication = await Application.findOne({
+      job: req.params.jobId,
+      jobseeker: req.user._id
+    });
+
+    if (existingApplication) {
+      return res.status(400).json({ success: false, error: 'You have already applied for this job' });
+    }
+
+    // Upload the file to Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      resource_type: 'auto', // Automatically determine the resource type
+    });
+
+    // Create the application with the Cloudinary URL
+    const application = await Application.create({
+      job: req.params.jobId,
+      jobseeker: req.user._id,
+      resume: result.secure_url // Get the URL from the Cloudinary response
+    });
+
+    // Optionally, delete the local file after uploading
+    fs.unlinkSync(req.file.path);
+
+    res.status(201).json({ success: true, application });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+exports.getAppliedJobs = async (req, res) => {
+  try {
+    const applications = await Application.find({ jobseeker: req.user._id })
+      .populate('job', 'title companyName');
+    res.status(200).json({ success: true, applications });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
   }
 };

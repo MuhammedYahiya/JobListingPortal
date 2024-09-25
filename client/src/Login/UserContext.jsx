@@ -8,9 +8,11 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  
-
-  return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
 };
 
 export const AuthorisedRoute = ({ element }) => {
@@ -22,9 +24,12 @@ export const AuthorisedRoute = ({ element }) => {
     const verify = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get("http://localhost:8000/api/verify-token", {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          "http://localhost:8000/api/verify-token",
+          {
+            withCredentials: true,
+          }
+        );
         setUser(response.data.user);
       } catch (e) {
         console.error("Error:", e);

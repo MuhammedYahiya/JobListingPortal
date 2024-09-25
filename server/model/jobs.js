@@ -9,9 +9,9 @@ const jobSchema = new Schema({
       trim: true,
     },
     date: {
-      type: Date,
+      type: String,
       required: [true, 'Job posting date is required'],
-      default: Date.now,
+      default: () => new Date().toLocaleDateString('en-GB'),
     },
     title: {
       type: String,
@@ -42,6 +42,11 @@ const jobSchema = new Schema({
       type: String,
       required: [true, 'Salary information is required'],
       trim: true,
+    },
+    employer: {
+      type: Schema.Types.ObjectId,
+      ref: 'employer', 
+      required: true,
     },
     createdAt: {
       type: Date,

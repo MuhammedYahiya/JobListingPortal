@@ -10,18 +10,23 @@ const CompanyCreate = () => {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
 
+    
+
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/dashboard/employer/create",
+        "http://localhost:8000/api/employer/job/create",
         {
           companyName: data.name,
-          date: data.date,
+          // date: data.date,
           title: data.title,
           qualification: data.qualification,
           location: data.location,
           description: data.description,
           responsibility: data.responsibility,
           salary: data.salary,
+        },
+        {
+          withCredentials:true
         }
       );
 
