@@ -16,11 +16,18 @@ const ProfilePage = () => {
     facebookLink: user.facebookLink || "",
     twitterLink: user.twitterLink || "",
     instagramLink: user.instagramLink || "",
+    resume: user.resume || null, // Store resume file
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
+  };
+
+  // Function to handle resume file upload
+  const handleResumeUpload = (e) => {
+    const file = e.target.files[0];
+    setUserData({ ...userData, resume: file });
   };
 
   const handleSave = () => {
@@ -39,118 +46,89 @@ const ProfilePage = () => {
           </button>
         </div>
 
-        <div className="profile-content">
-          {/* About Me Section */}
-          <div className="about-section">
-            <h2>About me</h2>
-            {isEditing ? (
-              <textarea
-                name="about"
-                value={userData.about}
-                onChange={handleInputChange}
-              />
-            ) : (
-              <p>{userData.about}</p>
-            )}
-          </div>
-
-          {/* Profile Image */}
-          <div className="profile-image-container">
-            <img src={userData.image} alt="Profile" />
-            {isEditing && (
-              <input
-                type="url"
-                name="image"
-                value={userData.image}
-                onChange={handleInputChange}
-                placeholder="Enter image URL"
-              />
-            )}
-          </div>
-
-          {/* Details Section */}
-          <div className="details-section">
-            <h2>Details</h2>
-            <p>
-              <strong>Name:</strong>{" "}
-              {isEditing ? (
-                <input
-                  type="text"
-                  name="name"
-                  value={userData.name}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                userData.name
-              )}
-            </p>
-            <p>
-              <strong>Age:</strong>{" "}
-              {isEditing ? (
-                <input
-                  type="text"
-                  name="age"
-                  value={userData.age}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                userData.age
-              )}{" "}
-              years
-            </p>
-            <p>
-              <strong>Location:</strong>{" "}
-              {isEditing ? (
-                <input
-                  type="text"
-                  name="location"
-                  value={userData.location}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                userData.location
-              )}
-            </p>
-
-            {/* Social Media Links */}
-            <div className="social-media">
-              <label>
-                Facebook:
-                <input
-                  type="url"
-                  name="facebookLink"
-                  value={userData.facebookLink}
-                  onChange={handleInputChange}
-                  disabled={!isEditing}
-                />
-              </label>
-              <label>
-                Twitter:
-                <input
-                  type="url"
-                  name="twitterLink"
-                  value={userData.twitterLink}
-                  onChange={handleInputChange}
-                  disabled={!isEditing}
-                />
-              </label>
-              <label>
-                Instagram:
-                <input
-                  type="url"
-                  name="instagramLink"
-                  value={userData.instagramLink}
-                  onChange={handleInputChange}
-                  disabled={!isEditing}
-                />
-              </label>
+        <div className="flex flex-col bg-gray-100 min-h-screen py-10 px-4">
+          {/* Profile Header */}
+          <div className="bg-white shadow-md rounded-lg p-6 max-w-4xl mx-auto">
+            <div className="text-center mb-8">
+              <h1 className="text-5xl font-bold text-blue-700 mb-4">{user.name} </h1>
+              <div className="text-2xl text-gray-500 italic uppercase">
+                {user.jobtitlename} 
+              </div>
             </div>
+
+            {/* Profile Image */}
+            {user.profilePicture && (
+              <div className="flex justify-center mb-8">
+                <img
+                  src={user.profilePicture}
+                  alt="Profile"
+                  className="w-40 h-40 rounded-full object-cover border-4 border-blue-500"
+                />
+              </div>
+            )}
+
+            {/* Profile Information */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-lg">
+              <div>
+                <p className="font-semibold text-gray-700">Skills:</p>
+                <p className="text-lg font-medium text-gray-900">HTML5, CSS3, Javascript </p>
+              </div>
+
+              <div>
+                <p className="font-semibold text-gray-700">Experience:</p>
+                <p className="text-xl font-medium text-gray-900">5 years</p>
+              </div>
+
+              <div>
+                <p className="font-semibold text-gray-700">PositionType:</p>
+                <p className="text-xl font-medium text-gray-900 uppercase">{user.positionType}</p>
+              </div>
+
+              <div>
+                <p className="font-semibold text-gray-700"> Address:</p>
+                <p className="text-lg text-gray-900">
+                  {user.address}, {user.city}, {user.state}, {user.country}
+                </p>
+              </div>
+
+              <div>
+                <p className="font-semibold text-gray-700">Social Media Link:</p>
+                <p className="text-lg text-blue-500 underline">
+                  <a href={user.socialMediaLink} target="_blank" rel="noreferrer">
+                    {user.socialMediaLink}
+                  </a>
+                </p>
+              </div>
+              <div>
+                <p className="font-semibold text-gray-700">Email:</p>
+                <p className="text-lg font-medium underline text-blue-500">{user.email}</p>
+              </div>
+
+              {/* Display Resume */}
+              <div>
+                <p className="font-semibold text-gray-700">Resume:</p>
+                <input className="text-sm flex " type="file" />
+              </div>
+            </div>
+
+            {/* Upload Resume (Visible only when editing) */}
+            {isEditing && (
+              <div className="mt-8">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Upload Resume</label>
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx"
+                  onChange={handleResumeUpload}
+                  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
+                />
+              </div>
+            )}
           </div>
         </div>
 
         {/* Save button when editing */}
         {isEditing && (
-          <button className="save-button" onClick={handleSave}>
+          <button className="save-button mt-4" onClick={handleSave}>
             Save Changes
           </button>
         )}
