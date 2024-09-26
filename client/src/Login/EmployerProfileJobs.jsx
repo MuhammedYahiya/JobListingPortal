@@ -13,7 +13,7 @@ const EmployerProfileJobs = () => {
         `http://localhost:8000/api/employer/job/${jobId}/candidates`,
         { withCredentials: true }
       );
-      console.log(response.data.applications);
+
       setCandidates(response.data.applications);
       setSelectedJobId(jobId); // Track which job's candidates are shown
     } catch (error) {
@@ -105,23 +105,25 @@ const EmployerProfileJobs = () => {
                 {candidates.length > 0 ? (
                   <ul className="list-disc list-inside">
                     {candidates.map((application) => (
+                      // console.log(application.jobseeker.resume)
                       <li key={application._id}>
                         <div className="flex flex-col">
                           <span>
                             {application.jobseeker.name} -{" "}
                             {application.jobseeker.email}
-                           
                           </span>
                           {/* Add the resume link */}
-                          {application.jobseeker.resume && (
+                          {application.resume ? (
                             <a
-                              href={`http://localhost:8000/api/${application.jobseeker.resume}`} // Construct the full path
+                              href={application.resume} // Use the resume URL from the response
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-500 underline"
                             >
                               View Resume
                             </a>
+                          ) : (
+                            <p>No resume provided</p>
                           )}
                         </div>
                       </li>

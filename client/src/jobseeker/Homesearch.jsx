@@ -24,10 +24,15 @@ function Homesearch() {
         setJobs(response.data.jobs);
 
         // Fetch applied jobs
-        const appliedResponse = await axios.get("http://localhost:8000/api/jobseeker/applications", {
-          withCredentials: true,
-        });
-        const appliedJobIds = appliedResponse.data.map(application => application.job);
+        const appliedResponse = await axios.get(
+          "http://localhost:8000/api/jobseeker/applications",
+          {
+            withCredentials: true,
+          }
+        );
+        const appliedJobIds = appliedResponse.data.map(
+          (application) => application.job
+        );
         setAppliedJobs(new Set(appliedJobIds)); // Store the applied job IDs as a Set
       } catch (error) {
         console.error("Error fetching jobs", error);
