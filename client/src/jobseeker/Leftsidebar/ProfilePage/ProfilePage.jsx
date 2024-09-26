@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../../Login/UserContext";
-import Leftsidebar from "../Leftsidebar"; 
+import Leftsidebar from "../Leftsidebar";
 import "./ProfilePage.css";
 
 const ProfilePage = () => {
-  const { user, setUser } = useContext(UserContext); 
+  const { user, setUser } = useContext(UserContext);
   const [isEditing, setIsEditing] = useState(false);
 
   const [userData, setUserData] = useState({
@@ -13,10 +13,9 @@ const ProfilePage = () => {
     age: user.age || "N/A",
     location: user.location || "Unknown",
     image: user.image || "https://via.placeholder.com/150",
-    facebookLink: user.facebookLink || "",
-    twitterLink: user.twitterLink || "",
-    instagramLink: user.instagramLink || "",
-    resume: user.resume || null, // Store resume file
+    linkedinLink: user.linkedinLink || "",
+    resume: user.resume || null,
+    skills: user.skills || ["Skill 1", "Skill 2", "Skill 3"],
   });
 
   const handleInputChange = (e) => {
@@ -24,114 +23,193 @@ const ProfilePage = () => {
     setUserData({ ...userData, [name]: value });
   };
 
-  // Function to handle resume file upload
+  const handleSkillsChange = (index, newSkill) => {
+    const updatedSkills = [...userData.skills];
+    updatedSkills[index] = newSkill;
+    setUserData({ ...userData, skills: updatedSkills });
+  };
+
+  const handleAddSkill = () => {
+    setUserData({ ...userData, skills: [...userData.skills, ""] });
+  };
+
+  const handleDeleteSkill = (index) => {
+    const updatedSkills = userData.skills.filter((_, skillIndex) => skillIndex !== index);
+    setUserData({ ...userData, skills: updatedSkills });
+  };
+
   const handleResumeUpload = (e) => {
     const file = e.target.files[0];
     setUserData({ ...userData, resume: file });
   };
 
   const handleSave = () => {
-    setUser(userData); 
-    setIsEditing(false); 
+    setUser(userData);
+    setIsEditing(false);
+  };
+
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
   };
 
   return (
     <div className="profile-page-container">
-      <Leftsidebar /> 
+      <Leftsidebar />
       <div className="profile-container">
         <div className="profile-header">
-          <h1>Profile</h1>
-          {/* <button onClick={() => setIsEditing(!isEditing)}>
-            {isEditing ? "Cancel" : "Edit Profile"}
-          </button> */}
+          <h2 className="profile-title">A BIT ABOUT ME</h2>
+          {!isEditing ? (
+            <h1 className="profile-name text-blue-700 font-bold text-4xl mb-2">
+              {userData.name}
+            </h1>
+          ) : (
+            <input
+              name="name"
+              value={userData.name}
+              onChange={handleInputChange}
+              className="edit-name-input center-name"
+            />
+          )}
         </div>
 
-        <div className="flex flex-col bg-gray-100 min-h-screen py-10 px-4">
-          {/* Profile Header */}
-          <div className="bg-white shadow-md rounded-lg p-6 max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <h1 className="text-5xl font-bold text-blue-700 mb-4">{user.name} </h1>
-              <div className="text-2xl text-gray-500 italic uppercase">
-                {user.jobtitlename} 
+        
+        <div className="main-info-container">
+      
+          <div className="about-details-container">
+            <div className="about-blue-box">
+              {/* Profile Image */}
+              <img
+                src={userData.image}
+                alt="Profile"
+                className="profile-image"
+              />
+              {/* About Text */}
+              <div className="about-text">
+                {!isEditing ? (
+                  <p>{userData.about}</p>
+                ) : (
+                  <textarea
+                    name="about"
+                    value={userData.about}
+                    onChange={handleInputChange}
+                    className="edit-about"
+                  />
+                )}
+              </div>
+
+              {/* Age */}
+              <div className="profile-info">
+                <label>
+                  Age:
+                  {!isEditing ? (
+                    <span>{userData.age}</span>
+                  ) : (
+                    <div className="inline-edit">
+                      <input
+                        name="age"
+                        value={userData.age}
+                        onChange={handleInputChange}
+                        className="edit-input"
+                      />
+                    </div>
+                  )}
+                </label>
+
+                {/* Location */}
+                <label>
+                  Location:
+                  {!isEditing ? (
+                    <span>{userData.location}</span>
+                  ) : (
+                    <div className="inline-edit">
+                      <input
+                        name="location"
+                        value={userData.location}
+                        onChange={handleInputChange}
+                        className="edit-input"
+                      />
+                    </div>
+                  )}
+                </label>
+
+                {/* LinkedIn Link */}
+                <label>
+                  LinkedIn:
+                  {!isEditing ? (
+                    <a href={userData.linkedinLink} target="_blank" rel="noopener noreferrer">
+                      {userData.linkedinLink || "No LinkedIn link"}
+                    </a>
+                  ) : (
+                    <div className="inline-edit">
+                      <input
+                        name="linkedinLink"
+                        value={userData.linkedinLink}
+                        onChange={handleInputChange}
+                        className="edit-input"
+                      />
+                    </div>
+                  )}
+                </label>
               </div>
             </div>
+          </div>
 
-            {/* Profile Image */}
-            {user.profilePicture && (
-              <div className="flex justify-center mb-8">
-                <img
-                  src={user.profilePicture}
-                  alt="Profile"
-                  className="w-40 h-40 rounded-full object-cover border-4 border-blue-500"
-                />
-              </div>
-            )}
-
-            {/* Profile Information */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-lg">
-              <div>
-                <p className="font-semibold text-gray-700">Skills:</p>
-                <p className="text-lg font-medium text-gray-900">HTML5, CSS3, Javascript </p>
-              </div>
-
-              <div>
-                <p className="font-semibold text-gray-700">Experience:</p>
-                <p className="text-xl font-medium text-gray-900">5 years</p>
-              </div>
-
-              <div>
-                <p className="font-semibold text-gray-700">PositionType:</p>
-                <p className="text-xl font-medium text-gray-900 uppercase">{user.positionType}</p>
-              </div>
-
-              <div>
-                <p className="font-semibold text-gray-700"> Address:</p>
-                <p className="text-lg text-gray-900">
-                  {user.address}, {user.city}, {user.state}, {user.country}
-                </p>
-              </div>
-
-              <div>
-                <p className="font-semibold text-gray-700">Social Media Link:</p>
-                <p className="text-lg text-blue-500 underline">
-                  <a href={user.socialMediaLink} target="_blank" rel="noreferrer">
-                    {user.socialMediaLink}
-                  </a>
-                </p>
-              </div>
-              <div>
-                <p className="font-semibold text-gray-700">Email:</p>
-                <p className="text-lg font-medium underline text-blue-500">{user.email}</p>
-              </div>
-
-              {/* Display Resume */}
-              <div>
-                <p className="font-semibold text-gray-700">Resume:</p>
-                <input className="text-sm flex " type="file" />
-              </div>
-            </div>
-
-            {/* Upload Resume (Visible only when editing) */}
+          {/* Skills Section */}
+          <div className="skills-container">
+            <h3 className="skills-title">Skills</h3>
+            <ul className="skills-list">
+              {!isEditing
+                ? userData.skills.map((skill, index) => (
+                    <li key={index} className="skill-item">
+                      {skill}
+                    </li>
+                  ))
+                : userData.skills.map((skill, index) => (
+                    <li key={index} className="skill-item">
+                      <input
+                        type="text"
+                        value={skill}
+                        onChange={(e) => handleSkillsChange(index, e.target.value)}
+                        className="edit-skill-input"
+                      />
+                      <button
+                        className="delete-skill-button"
+                        onClick={() => handleDeleteSkill(index)}
+                      >
+                        Delete
+                      </button>
+                    </li>
+                  ))}
+            </ul>
             {isEditing && (
-              <div className="mt-8">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Upload Resume</label>
-                <input
-                  type="file"
-                  accept=".pdf,.doc,.docx"
-                  onChange={handleResumeUpload}
-                  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
-                />
-              </div>
+              <button className="add-skill-button" onClick={handleAddSkill}>
+                Add Skill
+              </button>
             )}
           </div>
         </div>
 
-        {/* Save button when editing */}
-        {isEditing && (
-          <button className="save-button mt-4" onClick={handleSave}>
-            Save Changes
+        {/* Resume Upload */}
+        <div className="resume-upload">
+          <label>Upload Resume: </label>
+          {!isEditing ? (
+            <p>{userData.resume ? userData.resume.name : "No file uploaded"}</p>
+          ) : (
+            <input type="file" onChange={handleResumeUpload} />
+          )}
+        </div>
+
+        {/* Edit/Save Button for Entire Profile */}
+        <div className="edit-save-buttons">
+          <button className="edit-button" onClick={handleEditToggle}>
+            {isEditing ? "Cancel" : "Edit Profile"}
           </button>
-        )}
+          {isEditing && (
+            <button className="save-button" onClick={handleSave}>
+              Save Changes
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
