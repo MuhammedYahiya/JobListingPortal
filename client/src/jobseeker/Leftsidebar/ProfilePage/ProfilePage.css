@@ -1,74 +1,108 @@
 .profile-page-container {
-    display: flex;
-    height: 100vh; /* Full height of the viewport */
-  }
+  display: flex;
+}
+
+.profile-container {
+  flex: 1;
+  padding: 20px;
   
-  .left-sidebar {
-    width: 250px; /* Fixed width for sidebar */
-    background-color: #f8f9fa; /* Light background */
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sidebar shadow */
-  }
+}
+
+.center-name {
+  text-align: center; 
+  width: 100%;
+  font-size: 2rem;
+  font-weight: bold;
+  color: blue;
+  background-color: #ccc;
+}
+
+.main-info-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
   
-  .profile-container {
-    flex: 1; /* Takes up remaining space */
-    padding: 20px;
-    overflow-y: auto; /* Enable scrolling if content exceeds height */
-  }
-  
-  .profile-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  
-  .profile-header {
-    margin-bottom: 100px;
-  }
-  .profile-header h1 {
-    font-size: 2rem; 
-    font-weight: bold; /* Bold font */
-  }
-  
-  .details-section strong {
-    font-weight: bold; /* Make labels bolder */
-  }
-  
-  
-  .profile-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px;
-  }
-  
-  .about-section,
-  .details-section {
-    flex: 1;
-  }
-  
-  .profile-image-container img {
-    border-radius: 50%;
-    max-width: 150px;
-  }
-  
-  input,
-  textarea {
-    width: 100%;
-    padding: 8px;
-    margin: 10px 0;
-  }
-  
-  button.save-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button.save-button:hover {
-    background-color: #45a049;
-  }
-  
+}
+
+.about-details-container, .skills-container {
+  flex: 1;
+}
+
+.about-blue-box {
+  background-color: #aacfef;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.inline-edit {
+  display: inline-flex;
+  align-items: center;
+}
+
+.inline-edit input {
+  margin-left: 10px;
+  padding: 5px;
+  width: 200px;
+}
+
+.skills-container {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.skills-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.skills-list {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.skill-item {
+  margin-bottom: 5px;
+}
+
+.edit-skill-input {
+  width: 100%;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.delete-skill-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+
+}
+
+.add-skill-button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-save-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.edit-button, .save-button {
+  padding: 10px 15px;
+  margin-left: 10px;
+  background-color: #007bff;
+  color: rgb(245, 248, 249);
+  border: none
+}

@@ -106,6 +106,8 @@ function JobSeekerRegister() {
             />
           </label>
 
+
+
           <label>
             Years of Experience
             <select name="experience">
@@ -153,6 +155,12 @@ function JobSeekerRegister() {
               placeholder="e.g., jane@example.com"
             />
           </label>
+
+          <label>
+            Resume
+            <input type="file" name="resume" accept=".pdf,.doc,.docx" />
+          </label>
+          
           <label>
             Password*
             <input type="password" name="password" required />
