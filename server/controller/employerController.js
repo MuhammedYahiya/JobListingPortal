@@ -219,7 +219,7 @@ exports.editJob = async (req, res) => {
 exports.getAppliedCandidates = async (req, res) => {
   try {
     const applications = await Application.find({ job: req.params.jobId })
-      .populate("jobseeker", "name email")
+      .populate("jobseeker", "name email resume")
       .populate("job", "title");
     res.status(200).json({ success: true, applications });
   } catch (error) {

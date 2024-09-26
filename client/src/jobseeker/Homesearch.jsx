@@ -12,7 +12,7 @@ function Homesearch() {
   });
 
   const [jobs, setJobs] = useState([]);
-  const [appliedJobs, setAppliedJobs] = useState({}); // State to track applied jobs
+  const [appliedJobs, setAppliedJobs] = useState(new Set()); // Use Set to track applied jobs
   const [resumeFile, setResumeFile] = useState(null); // State to store the selected resume file
 
   useEffect(() => {
@@ -22,6 +22,13 @@ function Homesearch() {
           withCredentials: true,
         });
         setJobs(response.data.jobs);
+
+        // Fetch applied jobs
+        const appliedResponse = await axios.get("http://localhost:8000/api/jobseeker/applications", {
+          withCredentials: true,
+        });
+        const appliedJobIds = appliedResponse.data.map(application => application.job);
+        setAppliedJobs(new Set(appliedJobIds)); // Store the applied job IDs as a Set
       } catch (error) {
         console.error("Error fetching jobs", error);
       }
@@ -49,15 +56,19 @@ function Homesearch() {
 
     try {
       const formData = new FormData();
-      formData.append('resume', resumeFile); // Append the resume file
+      formData.append("resume", resumeFile); // Append the resume file
 
       // Make the API call to apply for the job
-      await axios.post(`http://localhost:8000/api/jobseeker/job/${jobId}/apply`, formData, {
-        withCredentials: true,
-      });
+      await axios.post(
+        `http://localhost:8000/api/jobseeker/job/${jobId}/apply`,
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
 
       // Update the appliedJobs state to reflect that this job has been applied for
-      setAppliedJobs((prev) => ({ ...prev, [jobId]: true }));
+      setAppliedJobs((prev) => new Set(prev).add(jobId)); // Add jobId to the Set
       setResumeFile(null); // Reset resume file after successful application
     } catch (error) {
       console.error("Error applying for the job", error);
@@ -175,10 +186,10 @@ function Homesearch() {
               />
               <button
                 className="bg-green-500 text-white p-2 mt-4 rounded-lg"
-                onClick={() => handleApply(job._id)} // Apply when button clicked
-                disabled={appliedJobs[job._id]} // Disable button if already applied
+                onClick={() => handleApply(job._id)}
+                disabled={appliedJobs.has(job._id)} // Disable if already applied
               >
-                {appliedJobs[job._id] ? "APPLIED" : "APPLY"} {/* Change button text based on application status */}
+                {appliedJobs.has(job._id) ? "APPLIED" : "APPLY"}
               </button>
             </div>
           ))}
