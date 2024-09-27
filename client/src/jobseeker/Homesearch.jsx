@@ -60,7 +60,7 @@ function Homesearch() {
 
       // Make the API call to apply for the job
       await axios.post(
-        `http://localhost:8000/api/jobseeker/job/${jobId}/apply`,
+        `http://localhost:8000/api/jobseeker/job/${jobId}/apply`, 
         formData,
         {
           withCredentials: true,
@@ -106,6 +106,7 @@ function Homesearch() {
               <option value="iOS Developer">iOS Developer</option>
               <option value="Android Developer">Android Developer</option>
               <option value="Developer Advocate">Developer Advocate</option>
+              <option value="software engineer">Software Engineer</option>
             </select>
             <select
               className="search-dropdown"

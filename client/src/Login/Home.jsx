@@ -13,38 +13,39 @@ function Home() {
       alert("Please select a role before proceeding.");
     } else {
       const path = `/${action}/${role}`;
-
       navigate(path);
     }
   };
 
   return (
     <div className="container-full">
-      <Navbar/>
+      <Navbar />
       <div className="home-container">
         <h1>Welcome to Job Genie</h1>
-        <img src={welcome} />
+        <img src={welcome} alt="Welcome to Job Genie" />
 
         <div className="role-selector">
-          <label>
+          <label style={{ color: "green" }} htmlFor="employer">
             <input
               type="radio"
+              id="employer"
               value="employer"
               checked={role === "employer"}
               onChange={(e) => setRole(e.target.value)}
-              aria-label="Select Employer role"
+              aria-label="Find a skilled individual to do the job"
             />
-            Employer
+            Find a skilled individual to do the job
           </label>
-          <label>
+          <label style={{ color: "green" }} htmlFor="jobseeker">
             <input
               type="radio"
+              id="jobseeker"
               value="jobseeker"
               checked={role === "jobseeker"}
               onChange={(e) => setRole(e.target.value)}
-              aria-label="Select Job Seeker role"
+              aria-label="Your dream job is waiting for you"
             />
-            Job Seeker
+            Your dream job is waiting for you
           </label>
         </div>
         <div className="action-buttons">
