@@ -1,20 +1,21 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../../../Login/UserContext";
-import "./Application.css";
+import "./Application.css"; 
 
 const Application = () => {
-  const { user } = useContext(UserContext); // Accessing user context
   const [appliedJobs, setAppliedJobs] = useState([]);
+  const { user } = useContext(UserContext); // Assuming user is in context
 
   useEffect(() => {
     const fetchAppliedJobs = async () => {
       try {
         const response = await axios.get("http://localhost:8000/api/jobseeker/applications", {
-          withCredentials: true,
+          withCredentials: true, // Include credentials for authentication
         });
-        if (Array.isArray(response.data)) {
-          setAppliedJobs(response.data); // Store the applied jobs
+
+        if (response.data.success && Array.isArray(response.data.applications)) {
+          setAppliedJobs(response.data.applications); // Set the list of applied jobs
         } else {
           console.error("Unexpected response format: ", response.data);
         }
@@ -28,7 +29,7 @@ const Application = () => {
 
   return (
     <div className="application-container">
-      <h1>{user.name}'s Applications</h1>
+      <h1>{user?.name}'s Applications</h1>
       {appliedJobs.length > 0 ? (
         <table className="applications-table">
           <thead>
@@ -41,13 +42,13 @@ const Application = () => {
             </tr>
           </thead>
           <tbody>
-            {appliedJobs.map((job) => (
-              <tr key={job._id}>
-                <td>{job.title}</td>
-                <td>{job.companyName}</td>
-                <td>{job.location}</td>
-                <td>{new Date(job.dateApplied).toLocaleDateString()}</td>
-                <td>{job.status}</td>
+            {appliedJobs.map((application) => (
+              <tr key={application._id}>
+                <td>{application.job.title}</td>
+                <td>{application.job.companyName}</td>
+                <td>{application.job.location || 'N/A'}</td>
+                <td>{new Date(application.createdAt).toLocaleDateString()}</td>
+                <td>{application.status || 'Pending'}</td>
               </tr>
             ))}
           </tbody>
