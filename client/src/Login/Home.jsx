@@ -21,8 +21,8 @@ function Home() {
   return (
     <div className="container-full">
       <Navbar />
-      <div className="flex flex-col">
-        <div className="flex p-4 gap-4 font-serif flex-col">
+      <div className="flex flex-col ">
+        <div className="flex p-4 gap-4 font-serif flex-col tracking-widest">
           <div className="flex gap-4">
             <div className="font-bold text-9xl text-green-500">#1</div>
             <div className="font-bold text-7xl text-red-500">JOB BOARD </div>

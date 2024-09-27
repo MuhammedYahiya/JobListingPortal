@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "./UserContext";
 import "./JobseekerLogin.css";
+import Login from "../assests/Login.png";
 
 function JobSeekerLogin() {
   const navigate = useNavigate();
@@ -41,23 +42,27 @@ function JobSeekerLogin() {
   };
 
   return (
-    <div className="container-full min-h-[100vh]">
-      <div className="login-container">
-        <h2>Job Seeker Login</h2>
-        <form onSubmit={handleSubmit}>
-          <input type="email" name="email" placeholder="Email" required />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-          />
-          <div className="button-container">
-            <button type="submit" className="login-button">
+    <div
+      className="flex justify-center items-center w-full min-h-screen bg-cover bg-center "
+      style={{ backgroundImage: `url(${Login})` }}
+    >
+      <div className="flex items-center w-full min-h-[100vh] backdrop-blur justify-end  ">
+        <div className="bg-[#00000066] p-6 rounded-md mr-60 flex flex-col gap-6 ">
+          <h2 className="text-white font-sans p-2 text-xl">JobSeeker Login</h2>
+          <form onSubmit={handleSubmit} className="items-center">
+            <input type="email" name="email" placeholder="Email" className="text-gray-700 font-medium font-sans tracking-wider" required />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              
+              required
+            />
+            <button type="submit" className="hover:bg-blue-800">
               Login
             </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );
