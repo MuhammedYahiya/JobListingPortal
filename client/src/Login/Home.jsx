@@ -41,25 +41,25 @@ function Home() {
           <img src={welcome} />
 
           <div className="role-selector">
-            <label>
+            <label style={{ color: "green" }} >
               <input
                 type="radio"
                 value="employer"
                 checked={role === "employer"}
                 onChange={(e) => setRole(e.target.value)}
-                aria-label="Select Employer role"
+                aria-label="Find a skilled individual to do the job"
               />
-              Employer
+              Find a skilled individual to do the job
             </label>
-            <label>
+            <label style={{ color: "green" }} >
               <input
                 type="radio"
                 value="jobseeker"
                 checked={role === "jobseeker"}
                 onChange={(e) => setRole(e.target.value)}
-                aria-label="Select Job Seeker role"
+                aria-label="Your dream job is waiting for you"
               />
-              Job Seeker
+              Your dream job is waiting for you
             </label>
           </div>
           <div className="action-buttons">
