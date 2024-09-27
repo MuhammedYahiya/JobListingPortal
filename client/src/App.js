@@ -15,6 +15,7 @@ import EmployerProfile from "./Login/EmployerProfile";
 import { AuthorisedRoute } from "./Login/UserContext";
 import ProfilePage from "./jobseeker/Leftsidebar/ProfilePage/ProfilePage";
 import EmployerProfileJobs from "./Login/EmployerProfileJobs";
+import Application from "./jobseeker/Leftsidebar/Applications/Application";
 
 function App() {
   return (
@@ -54,6 +55,10 @@ function App() {
         <Route
           path="/dashboard/Homesearch/profile"
           element={<AuthorisedRoute element={<ProfilePage />} />}
+        />
+        <Route
+          path="/dashboard/Homesearch/applications"
+          element={<AuthorisedRoute element={<Application />} />}
         />
       </Routes>
     </>
