@@ -185,9 +185,10 @@ exports.applyForJob = async (req, res) => {
 
     // Upload the file to Cloudinary
     const result = await cloudinary.uploader.upload(req.file.path, {
+      
       resource_type: 'auto', // Automatically determine the resource type
     });
-
+      console.log(result);
     // Create the application with the Cloudinary URL
     const application = await Application.create({
       job: req.params.jobId,
