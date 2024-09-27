@@ -14,6 +14,7 @@ function Homesearch() {
   const [jobs, setJobs] = useState([]);
   const [appliedJobs, setAppliedJobs] = useState(new Set()); // Use Set to track applied jobs
   const [resumeFile, setResumeFile] = useState(null); // State to store the selected resume file
+  const [isApplying, setIsApplying] = useState(false); // Define isApplying state
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -30,17 +31,22 @@ function Homesearch() {
             withCredentials: true,
           }
         );
-        const appliedJobIds = appliedResponse.data.map(
-          (application) => application.job
-        );
-        setAppliedJobs(new Set(appliedJobIds)); // Store the applied job IDs as a Set
+        if (Array.isArray(appliedResponse.data)) {
+          const appliedJobIds = appliedResponse.data.map(
+            (application) => application.job
+          );
+          setAppliedJobs(new Set(appliedJobIds)); // Store the applied job IDs as a Set
+        } else {
+          console.error("Unexpected response format: ", appliedResponse.data);
+        }
       } catch (error) {
         console.error("Error fetching jobs", error);
       }
     };
-
+  
     fetchJobs();
   }, []);
+  
 
   const handleFilterChange = (e) => {
     setFilters({
@@ -58,10 +64,12 @@ function Homesearch() {
       alert("Please select a resume file before applying.");
       return;
     }
+    setIsApplying(true);
 
     try {
       const formData = new FormData();
       formData.append("resume", resumeFile); // Append the resume file
+      formData.append("jobId", jobId);  // Send job ID
 
       // Make the API call to apply for the job
       await axios.post(
@@ -75,8 +83,24 @@ function Homesearch() {
       // Update the appliedJobs state to reflect that this job has been applied for
       setAppliedJobs((prev) => new Set(prev).add(jobId)); // Add jobId to the Set
       setResumeFile(null); // Reset resume file after successful application
+      alert(`Successfully applied to job!`);
     } catch (error) {
-      console.error("Error applying for the job", error);
+      if (error.response) {
+        if (error.response.status === 400) {
+          alert("Error Code: 400 - Bad Request. Please check the resume file or job details.");
+        } else if (error.response.status === 500) {
+          alert("Error Code: 500 - Server Error. Please try again later.");
+        } else {
+          alert(`Error Code: ${error.response.status} - Unexpected error. Please try again.`);
+        }
+      } else {
+        alert("Error Code: 1002 - Network error. Please check your connection.");
+      }
+  
+      console.error("Error applying for the job", error.response?.data || error);
+    } finally {
+      setIsApplying(false);  // Clear loading state
+    
     }
   };
 

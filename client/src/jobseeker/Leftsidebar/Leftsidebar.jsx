@@ -29,7 +29,7 @@ const Leftsidebar = () => {
 
         <li><NavLink to="/dashboard/Homesearch">Dashboard</NavLink></li>
           <li><NavLink to="/dashboard/Homesearch/profile">Profile</NavLink></li>
-          <li><NavLink to="">Applications</NavLink></li>
+          <li><NavLink to="/dashboard/Homesearch/applications">Applications</NavLink></li>
           <li><NavLink to="/">Logout</NavLink></li>
 
         </ul>
