@@ -49,6 +49,38 @@ const EmployerProfileJobs = () => {
     }
   };
 
+  const updateApplicationStatus = async (applicationId, status) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:8000/api/employer/application/${applicationId}/status`,
+        { status },
+        { withCredentials: true }
+      );
+      // Update candidates state with the new status
+      setCandidates((prevCandidates) =>
+        prevCandidates.map((candidate) =>
+          candidate._id === applicationId
+            ? { ...candidate, status: response.data.application.status }
+            : candidate
+        )
+      );
+    } catch (error) {
+      console.error("Error updating application status", error);
+    }
+  };
+
+  // const onClickRej = (applicationId) => {
+  //   updateApplicationStatus(applicationId, "Rejected");
+  // };
+
+  // const onClickSel = (applicationId) => {
+  //   updateApplicationStatus(applicationId, "Selected");
+  // };
+
+  const handleStatusChange = (applicationId, newStatus) => {
+    updateApplicationStatus(applicationId, newStatus);
+  };
+
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-2xl font-bold mb-6">Posted Jobs</h1>
@@ -116,7 +148,7 @@ const EmployerProfileJobs = () => {
                             {application.jobseeker.name} -{" "}
                             {application.jobseeker.email}
                           </span>
-                          {/* Add the resume link */}
+
                           {application.resume ? (
                             <a
                               href={application.resume} // Use the resume URL from the response
@@ -129,6 +161,39 @@ const EmployerProfileJobs = () => {
                           ) : (
                             <p>No resume provided</p>
                           )}
+
+                          <div className="flex  gap-3 mt-3 font-bold w-48">
+                            <button
+                              className={`p-1 rounded-md text-white cursor-pointer ${
+                                application.status === "Rejected"
+                                  ? "bg-red-500"
+                                  : "hover:bg-red-700 bg-red-500"
+                              }`}
+                              onClick={() =>
+                                handleStatusChange(application._id, "Rejected")
+                              }
+                              disabled={application.status === "Rejected"} // Disable button after rejected
+                            >
+                              {application.status === "Rejected"
+                                ? "Rejected"
+                                : "Reject"}
+                            </button>
+                            <button
+                              className={`p-1 rounded-md text-white cursor-pointer ${
+                                application.status === "Selected"
+                                  ? "bg-green-500"
+                                  : "hover:bg-green-700 bg-green-500"
+                              }`}
+                              onClick={() =>
+                                handleStatusChange(application._id, "Selected")
+                              }
+                              disabled={application.status === "Selected"} // Disable button after selected
+                            >
+                              {application.status === "Selected"
+                                ? "Selected"
+                                : "Select"}
+                            </button>
+                          </div>
                         </div>
                       </li>
                     ))}
