@@ -106,3 +106,39 @@
   color: rgb(245, 248, 249);
   border: none
 }
+
+.profile-image {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
+
+.image-upload {
+  margin-top: 10px;
+}
+
+.edit-save-buttons {
+  margin-top: 20px;
+}
+
+.skills-container {
+  margin-top: 20px;
+}
+
+.skills-title {
+  font-weight: bold;
+}
+
+.add-skill-button {
+  margin-top: 10px;
+}
+.resume-link {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.resume-link:hover {
+  text-decoration: none;
+}
+
