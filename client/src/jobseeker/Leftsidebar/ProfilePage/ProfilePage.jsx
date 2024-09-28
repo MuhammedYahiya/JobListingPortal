@@ -6,6 +6,7 @@ import "./ProfilePage.css";
 const ProfilePage = () => {
   const { user, setUser } = useContext(UserContext);
   const [isEditing, setIsEditing] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
 
   const [userData, setUserData] = useState({
     name: user.name || "John Doe",
@@ -43,8 +44,39 @@ const ProfilePage = () => {
     setUserData({ ...userData, resume: file });
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+
+    if (!file || !file.type.startsWith("image/")) {
+      alert("Please upload a valid image file.");
+      return;
+    }
+
+    const reader = new FileReader();
+    setImageLoading(true);
+
+    reader.onloadend = () => {
+      setUserData({ ...userData, image: reader.result });
+      setImageLoading(false);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSave = () => {
-    setUser(userData);
+    const saveUserData = async () => {
+      try {
+        // Example API call to save data
+        setUser(userData);
+        alert("Profile updated successfully!");
+      } catch (error) {
+        alert("Error updating profile: " + error.message);
+      }
+    };
+
+    saveUserData();
     setIsEditing(false);
   };
 
@@ -72,17 +104,24 @@ const ProfilePage = () => {
           )}
         </div>
 
-        
         <div className="main-info-container">
-      
           <div className="about-details-container">
             <div className="about-blue-box">
               {/* Profile Image */}
               <img
-                src={userData.image}
+                src={imageLoading ? "https://via.placeholder.com/150" : userData.image}
                 alt="Profile"
                 className="profile-image"
               />
+              {/* Image Upload Input */}
+              {isEditing && (
+                <div className="image-upload">
+                  <label>
+                    Upload Profile Picture:
+                    <input type="file" accept="image/*" onChange={handleImageUpload} />
+                  </label>
+                </div>
+              )}
               {/* About Text */}
               <div className="about-text">
                 {!isEditing ? (
@@ -97,42 +136,36 @@ const ProfilePage = () => {
                 )}
               </div>
 
-              {/* Age */}
+              {/* Age and Location */}
               <div className="profile-info">
                 <label>
                   Age:
                   {!isEditing ? (
                     <span>{userData.age}</span>
                   ) : (
-                    <div className="inline-edit">
-                      <input
-                        name="age"
-                        value={userData.age}
-                        onChange={handleInputChange}
-                        className="edit-input"
-                      />
-                    </div>
+                    <input
+                      name="age"
+                      value={userData.age}
+                      onChange={handleInputChange}
+                      className="edit-input"
+                    />
                   )}
                 </label>
 
-                {/* Location */}
                 <label>
                   Location:
                   {!isEditing ? (
                     <span>{userData.location}</span>
                   ) : (
-                    <div className="inline-edit">
-                      <input
-                        name="location"
-                        value={userData.location}
-                        onChange={handleInputChange}
-                        className="edit-input"
-                      />
-                    </div>
+                    <input
+                      name="location"
+                      value={userData.location}
+                      onChange={handleInputChange}
+                      className="edit-input"
+                    />
                   )}
                 </label>
 
-                {/* LinkedIn Link */}
                 <label>
                   LinkedIn:
                   {!isEditing ? (
@@ -140,14 +173,12 @@ const ProfilePage = () => {
                       {userData.linkedinLink || "No LinkedIn link"}
                     </a>
                   ) : (
-                    <div className="inline-edit">
-                      <input
-                        name="linkedinLink"
-                        value={userData.linkedinLink}
-                        onChange={handleInputChange}
-                        className="edit-input"
-                      />
-                    </div>
+                    <input
+                      name="linkedinLink"
+                      value={userData.linkedinLink}
+                      onChange={handleInputChange}
+                      className="edit-input"
+                    />
                   )}
                 </label>
               </div>
@@ -193,7 +224,20 @@ const ProfilePage = () => {
         <div className="resume-upload">
           <label>Upload Resume: </label>
           {!isEditing ? (
-            <p>{userData.resume ? userData.resume.name : "No file uploaded"}</p>
+            <>
+              {userData.resume ? (
+                <a
+                  href={URL.createObjectURL(userData.resume)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="resume-link"
+                >
+                  View Resume
+                </a>
+              ) : (
+                <p>No file uploaded</p>
+              )}
+            </>
           ) : (
             <input type="file" onChange={handleResumeUpload} />
           )}
