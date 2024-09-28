@@ -20,16 +20,37 @@ function Home() {
   return (
     <div className="container-full">
       <Navbar />
-      <div className="flex flex-col ">
-        
+      <div className="content-container">
+        {/* Job Board Title Section */}
+        <div className="job-board-title">
+          <div className="job-board-title-item font-bold text-5xl text-green-500">
+            #1
+          </div>
+          <div className="job-board-title-item font-bold text-4xl text-red-500">
+            JOB BOARD
+          </div>
+        </div>
+
+        <div className="job-board-subtitle">
+          <div className="font-bold text-4xl text-gray-500">FOR HIRING</div>
+          <div className="font-bold text-5xl text-gray-700">OR</div>
+          <div className="font-bold text-4xl text-gray-500">
+            FIND YOUR DREAM JOB
+          </div>
+        </div>
+
+        {/* Centered Welcome Image */}
         <div className="home-container">
           <h1 className="font-sans font-bold italic text-gray-600 text-6xl">
             Welcome to Job Genie
           </h1>
-          <img src={welcome} />
+          <div className="image-container">
+            <img src={welcome} alt="Welcome" className="welcome-image" />
+          </div>
 
+          {/* Role Selector */}
           <div className="role-selector">
-            <label style={{ color: "green" }} >
+            <label style={{ color: "green" }}>
               <input
                 type="radio"
                 value="employer"
@@ -39,7 +60,7 @@ function Home() {
               />
               Find a skilled individual to do the job
             </label>
-            <label style={{ color: "green" }} >
+            <label style={{ color: "green" }}>
               <input
                 type="radio"
                 value="jobseeker"
@@ -50,6 +71,8 @@ function Home() {
               Your dream job is waiting for you
             </label>
           </div>
+
+          {/* Action Buttons */}
           <div className="action-buttons">
             <button onClick={() => handleNavigation("login")} disabled={!role}>
               Login
@@ -60,19 +83,6 @@ function Home() {
             >
               Register
             </button>
-          </div>
-        </div>
-        <div className="flex p-4 gap-4 font-serif flex-col tracking-widest">
-          <div className="flex gap-4">
-            <div className="font-bold text-7xl text-green-500">#1</div>
-            <div className="font-bold text-5xl text-red-500">JOB BOARD </div>
-          </div>
-          <div className="flex flex-col gap-4">
-            <div className="font-bold text-3xl text-gray-500"> FOR HIRING</div>
-            <div className="font-bold text-5xl text-gray-700 ml-32">OR</div>
-            <div className="font-bold text-3xl text-gray-500 ml-24">
-              FIND YOUR DREAM JOB
-            </div>
           </div>
         </div>
       </div>
