@@ -37,18 +37,18 @@ const Application = () => {
               <th>Job Title</th>
               <th>Company</th>
               <th>Location</th>
-              <th>Date Applied</th>
+              
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
             {appliedJobs.map((application) => (
               <tr key={application._id}>
-                <td>{application.job.title}</td>
-                <td>{application.job.companyName}</td>
-                <td>{application.job.location || 'N/A'}</td>
-                <td>{new Date(application.createdAt).toLocaleDateString()}</td>
-                <td>{application.status || 'Pending'}</td>
+                <td>{application.job?.title || "N/A"}</td>
+                <td>{application.job?.companyName || "N/A"}</td>
+                <td>{application.job?.location || "N/A"}</td>
+           
+                <td>{application.status || "Pending"}</td>
               </tr>
             ))}
           </tbody>
