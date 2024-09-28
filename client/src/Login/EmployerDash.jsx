@@ -179,6 +179,16 @@ const EmployerDash = () => {
               placeholder="title"
               className="mb-3 p-2 border rounded w-full"
             />
+            <label htmlFor="qualification">Experience</label>
+            <input
+              type="text"
+              name="experience"
+              id="experience"
+              value={editJobData.experience}
+              onChange={handleChange}
+              placeholder="title"
+              className="mb-3 p-2 border rounded w-full"
+            />
             <label htmlFor="location">location</label>
             <input
               type="text"

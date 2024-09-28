@@ -73,6 +73,10 @@ const EmployerProfileJobs = () => {
               {job.qualification}
             </p>
             <p className="text-gray-600 mb-2">
+              <strong>Experience Required: </strong>
+              {job.experience} years
+            </p>
+            <p className="text-gray-600 mb-2">
               <strong>Date Posted: </strong>
               {job.date}
             </p>

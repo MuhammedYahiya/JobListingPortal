@@ -23,6 +23,12 @@ const jobSchema = new Schema({
       required: [true, 'Qualification is required'],
       trim: true,
     },
+    experience: {
+      type: String,
+      required: [true, 'Qualification is required'],
+      trim: true,
+    },
+    
     location: {
       type: String,
       required: [true, 'Location is required'],

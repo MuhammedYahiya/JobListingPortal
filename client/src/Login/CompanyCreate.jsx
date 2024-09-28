@@ -10,8 +10,6 @@ const CompanyCreate = () => {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
 
-    
-
     try {
       const response = await axios.post(
         "http://localhost:8000/api/employer/job/create",
@@ -24,9 +22,10 @@ const CompanyCreate = () => {
           description: data.description,
           responsibility: data.responsibility,
           salary: data.salary,
+          experience:data.experience,
         },
         {
-          withCredentials:true
+          withCredentials: true,
         }
       );
 
@@ -72,6 +71,8 @@ const CompanyCreate = () => {
             id="qualification"
             name="qualification"
           />
+          <label htmlFor="experience">Experience Required</label>
+          <input type="text" className="my-2" id="experience" name="experience" />
           <label htmlFor="location">Location</label>
           <input type="text" className="my-2" id="location" name="location" />
           <label htmlFor="salary">Salary</label>
@@ -90,16 +91,16 @@ const CompanyCreate = () => {
             id="responsibility"
             name="responsibility"
           />
-          <div className="flex flex-row items-center gap-2 my-10">
+          <div className="flex flex-row items-center gap-2 my-10 justify-center">
             <div
-              className="bg-gray-300 text-white cursor-pointer p-2"
+              className="bg-red-500 text-white cursor-pointer p-2 rounded-md hover:bg-red-700"
               onClick={() => navigate("/dashboard/employer")}
             >
               Cancel
             </div>
             <button
               type="submit"
-              className="bg-gray-300 text-white cursor-pointer p-2"
+              className="bg-blue-500 text-white cursor-pointer p-2 rounded-md hover:bg-blue-700 "
             >
               Add JOb
             </button>
