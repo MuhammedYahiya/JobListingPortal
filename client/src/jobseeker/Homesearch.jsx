@@ -4,6 +4,8 @@ import "./Homesearch.css";
 import axios from "axios";
 
 function Homesearch() {
+
+  
   const [filters, setFilters] = useState({
     jobRole: "",
     jobType: "",
@@ -110,6 +112,17 @@ function Homesearch() {
     }
   };
 
+  const filteredJobs = jobs.filter((job) => {
+
+   
+    return (
+      (filters.jobRole ? job.title.includes(filters.jobRole) : true) &&
+      // (filters.jobType ? job.type === filters.jobType : true) &&
+      (filters.location ? job.location.includes(filters.location) : true) &&
+      (filters.experience ? filters.experience.includes(job.experience) : true )
+    );
+  });
+
   return (
     <div className="homesearch-container">
       <Leftsidebar />
@@ -134,7 +147,7 @@ function Homesearch() {
               <option value="Developer Advocate">Developer Advocate</option>
               <option value="Software Engineer">Software Engineer</option>
             </select>
-            <select
+            {/* <select
               className="search-dropdown"
               name="jobType"
               value={filters.jobType}
@@ -143,7 +156,7 @@ function Homesearch() {
               <option value="">Job Type</option>
               <option value="Full time">Full time</option>
               <option value="Part time">Part time</option>
-            </select>
+            </select> */}
             <select
               className="search-dropdown"
               name="location"
@@ -188,12 +201,16 @@ function Homesearch() {
                 {job.salary}
               </p>
               <p className="text-gray-600 mb-2">
+                <strong>Experience: </strong>
+                {job.experience} years
+              </p>
+              <p className="text-gray-600 mb-2">
                 <strong>Qualification: </strong>
                 {job.qualification}
               </p>
               <p className="text-gray-600 mb-2">
                 <strong>Date Posted: </strong>
-                {new Date(job.date).toLocaleDateString()}
+                {job.date}
               </p>
               <p className="text-gray-600 mb-2">
                 <strong>Description: </strong>

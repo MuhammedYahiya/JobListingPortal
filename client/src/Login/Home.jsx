@@ -23,18 +23,18 @@ function Home() {
       <div className="content-container">
         {/* Job Board Title Section */}
         <div className="job-board-title">
-          <div className="job-board-title-item font-bold text-9xl text-green-500">
+          <div className="job-board-title-item font-bold text-5xl text-green-500">
             #1
           </div>
-          <div className="job-board-title-item font-bold text-7xl text-red-500">
+          <div className="job-board-title-item font-bold text-4xl text-red-500">
             JOB BOARD
           </div>
         </div>
 
         <div className="job-board-subtitle">
-          <div className="font-bold text-5xl text-gray-500">FOR HIRING</div>
-          <div className="font-bold text-7xl text-gray-700">OR</div>
-          <div className="font-bold text-5xl text-gray-500">
+          <div className="font-bold text-4xl text-gray-500">FOR HIRING</div>
+          <div className="font-bold text-5xl text-gray-700">OR</div>
+          <div className="font-bold text-4xl text-gray-500">
             FIND YOUR DREAM JOB
           </div>
         </div>
