@@ -208,7 +208,7 @@ exports.applyForJob = async (req, res) => {
 exports.getAppliedJobs = async (req, res) => {
   try {
     const applications = await Application.find({ jobseeker: req.user._id })
-      .populate('job', 'title companyName');
+      .populate('job', 'title companyName location');
     res.status(200).json({ success: true, applications });
   } catch (error) {
     res.status(400).json({ success: false, error: error.message });
