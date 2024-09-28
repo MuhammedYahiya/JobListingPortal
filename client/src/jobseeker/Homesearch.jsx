@@ -83,14 +83,15 @@ function Homesearch() {
       setResumeFile(null);
       alert(`Successfully applied to job!`);
     } catch (error) {
-      console.error("Error applying for the job", error); // Log the entire error object
+      console.error("Error applying for the job", error);
       if (error.response) {
         const statusCode = error.response.status;
-        const message = statusCode === 400
-          ? "Error Code: 400 - Bad Request. Please check the resume file or job details."
-          : statusCode === 500
-          ? "Error Code: 500 - Server Error. Please try again later."
-          : `Error Code: ${statusCode} - Unexpected error. Please try again.`;
+        const message =
+          statusCode === 400
+            ? "Error Code: 400 - Bad Request. Please check the resume file or job details."
+            : statusCode === 500
+            ? "Error Code: 500 - Server Error. Please try again later."
+            : `Error Code: ${statusCode} - Unexpected error. Please try again.`;
         alert(message);
       } else {
         alert("Error Code: 1002 - Network error. Please check your connection.");
@@ -100,11 +101,25 @@ function Homesearch() {
     }
   };
 
+  const parseExperienceRange = (range) => {
+    const [min, max] = range.split("-").map((str) => parseInt(str, 10));
+    return { min: min || 0, max: max || Infinity };
+  };
+
   const filteredJobs = jobs.filter((job) => {
+    const jobExperience = parseInt(job.experience, 10); // Convert job experience to a number
+    const { min, max } = filters.experience ? parseExperienceRange(filters.experience) : { min: 0, max: Infinity };
+
     return (
-      (filters.jobRole ? job.title.includes(filters.jobRole) : true) &&
-      (filters.location ? job.location.includes(filters.location) : true) &&
-      (filters.experience ? filters.experience.includes(job.experience) : true)
+      (filters.jobRole
+        ? job.title.toLowerCase().includes(filters.jobRole.toLowerCase())
+        : true) &&
+      (filters.location
+        ? job.location.toLowerCase().includes(filters.location.toLowerCase())
+        : true) &&
+      (filters.experience
+        ? jobExperience >= min && jobExperience <= max
+        : true)
     );
   });
 
@@ -150,7 +165,9 @@ function Homesearch() {
               <option value="">Experience</option>
               <option value="0-2 years">0-2 years</option>
               <option value="3-5 years">3-5 years</option>
-              <option value="5-8 years">6-7 years</option>
+              <option value="5-6 years">5-6 years</option>
+              <option value="6-7 years">6-7 years</option>
+              <option value="8+ years">8+ years</option>
             </select>
             <button className="search-button">Search</button>
           </div>
