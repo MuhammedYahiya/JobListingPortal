@@ -16,10 +16,18 @@ function Homesearch() {
   const [resumeFile, setResumeFile] = useState(null); // State to store the selected resume file
   const [isApplying, setIsApplying] = useState(false); // Define isApplying state
 
+  // Fetch jobs and applied jobs from the backend when filters change
   useEffect(() => {
     const fetchJobs = async () => {
       try {
+        // Pass filters as query parameters
         const response = await axios.get("http://localhost:8000/api/jobs", {
+          params: {
+            jobRole: filters.jobRole,
+            jobType: filters.jobType,
+            location: filters.location,
+            experience: filters.experience,
+          },
           withCredentials: true,
         });
         setJobs(response.data.jobs);
@@ -43,10 +51,9 @@ function Homesearch() {
         console.error("Error fetching jobs", error);
       }
     };
-  
+
     fetchJobs();
-  }, []);
-  
+  }, [filters]); // Re-fetch jobs when filters change
 
   const handleFilterChange = (e) => {
     setFilters({
@@ -96,22 +103,12 @@ function Homesearch() {
       } else {
         alert("Error Code: 1002 - Network error. Please check your connection.");
       }
-  
+
       console.error("Error applying for the job", error.response?.data || error);
     } finally {
       setIsApplying(false);  // Clear loading state
-    
     }
   };
-
-  const filteredJobs = jobs.filter((job) => {
-    return (
-      (filters.jobRole ? job.title.includes(filters.jobRole) : true) &&
-      (filters.jobType ? job.type === filters.jobType : true) &&
-      (filters.location ? job.location.includes(filters.location) : true) &&
-      (filters.experience ? job.experience.includes(filters.experience) : true)
-    );
-  });
 
   return (
     <div className="homesearch-container">
@@ -135,7 +132,7 @@ function Homesearch() {
               <option value="iOS Developer">iOS Developer</option>
               <option value="Android Developer">Android Developer</option>
               <option value="Developer Advocate">Developer Advocate</option>
-              <option value="software engineer">Software Engineer</option>
+              <option value="Software Engineer">Software Engineer</option>
             </select>
             <select
               className="search-dropdown"
@@ -167,7 +164,7 @@ function Homesearch() {
               <option value="">Experience</option>
               <option value="0-2 years">0-2 years</option>
               <option value="3-5 years">3-5 years</option>
-              <option value="5-8 years">5-8 years</option>
+              <option value="5-8 years">6-7 years</option>
             </select>
             <button className="search-button">Search</button>
           </div>
@@ -175,7 +172,7 @@ function Homesearch() {
 
         {/* Job Listings */}
         <div className="jobs-list w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredJobs.map((job) => (
+          {jobs.map((job) => (
             <div key={job._id} className="bg-white shadow-md rounded-lg p-6">
               <h2 className="text-xl font-semibold mb-2">{job.companyName}</h2>
               <p className="text-gray-600 mb-2">
