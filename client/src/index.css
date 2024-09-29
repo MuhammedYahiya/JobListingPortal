@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 .text-stroke-3 {
-    color: transparent;
-    font-family: Arial, Helvetica, sans-serif;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: white;
+  color: transparent;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: white;
 }
+
+.gradient-text {
+    background: linear-gradient(90deg, rgba(0, 212, 255, 1) 9%, rgba(80, 80, 241, 1) 32%, rgba(2, 0, 36, 1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }

@@ -4,21 +4,24 @@ import "./Homesearch.css";
 import axios from "axios";
 
 function Homesearch() {
-  const [filters, setFilters] = useState({
-    jobRole: "",
-    jobType: "",
-    location: "",
-    experience: "",
-  });
-
   const [jobs, setJobs] = useState([]);
   const [appliedJobs, setAppliedJobs] = useState(new Set());
   const [resumeFile, setResumeFile] = useState(null);
   const [isApplying, setIsApplying] = useState(false);
 
+  const [filters, setFilters] = useState({
+    jobRole: "",
+
+    location: "",
+    experience: "",
+  });
+
   useEffect(() => {
+    
     const fetchJobs = async () => {
       try {
+        // Fetch jobs based on the filters
+       
         const response = await axios.get("http://localhost:8000/api/jobs", {
           params: {
             jobRole: filters.jobRole,
@@ -28,17 +31,23 @@ function Homesearch() {
           },
           withCredentials: true,
         });
+        
         setJobs(response.data.jobs);
 
+        // Fetch the applied jobs list
+        
         const appliedResponse = await axios.get(
           "http://localhost:8000/api/jobseeker/applications",
           { withCredentials: true }
         );
-        if (Array.isArray(appliedResponse.data)) {
-          const appliedJobIds = appliedResponse.data.map(
-            (application) => application.job
+
+        console.log("Applied jobs response:", appliedResponse.data);
+
+        if (Array.isArray(appliedResponse.data.applications)) {
+          const appliedJobIds = new Set(
+            appliedResponse.data.applications.map((application) => application.job._id) // Access job._id
           );
-          setAppliedJobs(new Set(appliedJobIds));
+          setAppliedJobs(appliedJobIds); // Store the job ids in the appliedJobs state
         } else {
           console.error("Unexpected response format: ", appliedResponse.data);
         }
@@ -94,7 +103,9 @@ function Homesearch() {
             : `Error Code: ${statusCode} - Unexpected error. Please try again.`;
         alert(message);
       } else {
-        alert("Error Code: 1002 - Network error. Please check your connection.");
+        alert(
+          "Error Code: 1002 - Network error. Please check your connection."
+        );
       }
     } finally {
       setIsApplying(false);
@@ -108,7 +119,9 @@ function Homesearch() {
 
   const filteredJobs = jobs.filter((job) => {
     const jobExperience = parseInt(job.experience, 10); // Convert job experience to a number
-    const { min, max } = filters.experience ? parseExperienceRange(filters.experience) : { min: 0, max: Infinity };
+    const { min, max } = filters.experience
+      ? parseExperienceRange(filters.experience)
+      : { min: 0, max: Infinity };
 
     return (
       (filters.jobRole
@@ -117,9 +130,7 @@ function Homesearch() {
       (filters.location
         ? job.location.toLowerCase().includes(filters.location.toLowerCase())
         : true) &&
-      (filters.experience
-        ? jobExperience >= min && jobExperience <= max
-        : true)
+      (filters.experience ? jobExperience >= min && jobExperience <= max : true)
     );
   });
 
@@ -180,7 +191,9 @@ function Homesearch() {
           ) : (
             filteredJobs.map((job) => (
               <div key={job._id} className="bg-white shadow-md rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-2">{job.companyName}</h2>
+                <h2 className="text-xl font-semibold mb-2">
+                  {job.companyName}
+                </h2>
                 <p className="text-gray-600 mb-2">
                   <strong>Job Title: </strong>
                   {job.title}

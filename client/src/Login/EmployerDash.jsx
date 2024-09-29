@@ -4,6 +4,7 @@ import { FiAlignJustify } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 const EmployerDash = () => {
   const [popoverOpenFor, setPopoverOpenFor] = useState(null);
@@ -69,18 +70,23 @@ const EmployerDash = () => {
     <div>
       <div>
         <ul className="flex font-semibold items-center gap-5 p-4 justify-end mr-5">
-          <li className="hover:cursor-pointer hover:text-xl ">Home</li>
+          <li className="hover:cursor-pointer hover:text-xl hover:text-teal-600">
+            Home
+          </li>
           <li
-            className="hover:cursor-pointer hover:text-xl "
+            className="hover:cursor-pointer hover:text-xl hover:text-teal-600 "
             onClick={onHandleClickJob}
           >
             Jobs
           </li>
           <li
-            className="hover:cursor-pointer hover:text-xl "
+            className="hover:cursor-pointer hover:text-xl hover:text-teal-600"
             onClick={onHandleClick}
           >
             Profile
+          </li>
+          <li className="hover:cursor-pointer hover:text-xl hover:text-teal-600">
+            <NavLink to="/">Logout</NavLink>
           </li>
         </ul>
       </div>
@@ -94,7 +100,7 @@ const EmployerDash = () => {
             />
             <button
               onClick={() => navigate("/dashboard/employer/create")}
-              className="w-[200px] bg-gray-800 text-white rounded-lg"
+              className="w-[200px] bg-gray-800 text-white rounded-lg hover:bg-gray-600"
             >
               New Job
             </button>
@@ -112,7 +118,7 @@ const EmployerDash = () => {
             </thead>
             <tbody>
               {jobs.map((job, index) => (
-                <tr key={job._id} className="bg-white">
+                <tr key={job._id} className="bg-white hover:bg-gray-200">
                   <td className="p-4">{index + 1}</td>
                   <td className="text-black">{job.companyName}</td>
                   <td>{job.date}</td>
@@ -127,7 +133,7 @@ const EmployerDash = () => {
                     {popoverOpenFor === job._id && (
                       <div className="absolute z-10 bg-white border border-gray-300 p-2 rounded shadow-lg mt-2">
                         <button
-                          className="text-gray-700 hover:bg-gray-100 p-2 block w-full text-left text-sm"
+                          className=" text-white bg-gray-700 hover:bg-gray-100 hover:text-gray-600 p-2 block w-full text-left text-sm "
                           onClick={() => handleEditJob(job)}
                         >
                           Edit

@@ -8,16 +8,20 @@ const EmployerProfileJobs = () => {
   const [selectedJobId, setSelectedJobId] = useState(null); // Track selected job ID for candidates
 
   const handleViewCandidates = async (jobId) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8000/api/employer/job/${jobId}/candidates`,
-        { withCredentials: true }
-      );
-
-      setCandidates(response.data.applications);
-      setSelectedJobId(jobId); // Track which job's candidates are shown
-    } catch (error) {
-      console.error("Error fetching candidates", error);
+    if (selectedJobId === jobId) {
+      // If the same job is clicked again, close the candidates section
+      setSelectedJobId(null);
+    } else {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/employer/job/${jobId}/candidates`,
+          { withCredentials: true }
+        );
+        setCandidates(response.data.applications);
+        setSelectedJobId(jobId); // Track which job's candidates are shown
+      } catch (error) {
+        console.error("Error fetching candidates", error);
+      }
     }
   };
 
@@ -69,25 +73,24 @@ const EmployerProfileJobs = () => {
     }
   };
 
-  // const onClickRej = (applicationId) => {
-  //   updateApplicationStatus(applicationId, "Rejected");
-  // };
-
-  // const onClickSel = (applicationId) => {
-  //   updateApplicationStatus(applicationId, "Selected");
-  // };
-
   const handleStatusChange = (applicationId, newStatus) => {
     updateApplicationStatus(applicationId, newStatus);
   };
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">Posted Jobs</h1>
-      <div className="grid grid-cols-1  gap-6">
+      <h1 className="text-5xl font-bold p-2 mb-11 uppercase text-zinc-600 tracking-widest italic shadow-[10px_10px_1px_5px_rgba(0,0,0,0.3)]">
+        Posted Jobs
+      </h1>
+      <div className="grid grid-cols-3  gap-6  ">
         {jobs.map((job) => (
-          <div key={job._id} className="bg-white shadow-md rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-2">{job.companyName}</h2>
+          <div
+            key={job._id}
+            className="bg-white shadow-md rounded-lg p-6 shadow-zinc-600 hover:shadow-[5px_5px_3px_1px] hover:shadow-zinc-400"
+          >
+            <h2 className="text-3xl font-semibold mb-2 uppercase font-serif text-gray-600 italic">
+              {job.companyName}
+            </h2>
             <p className="text-gray-600 mb-2">
               <strong>Job Title: </strong>
               {job.title}
@@ -120,31 +123,33 @@ const EmployerProfileJobs = () => {
               <strong>Responsibility: </strong>
               {job.responsibility}
             </p>
-            <div className="flex gap-2">
+            <div className="flex gap-2 w-[300px]">
               <button
                 onClick={() => handleDelete(job._id)}
-                className="bg-red-500 text-white p-2 mt-4 rounded-lg"
+                className="bg-red-500 text-white p-2 mt-4 rounded-lg hover:bg-red-700"
               >
                 Delete Job
               </button>
               <button
-                className="bg-green-500 text-white p-2 mt-4 rounded-lg"
+                className="bg-green-500 text-white p-2 mt-4 rounded-lg hover:bg-green-700"
                 onClick={() => handleViewCandidates(job._id)}
               >
-                View Candidates
+                {selectedJobId === job._id ? "Hide Candidates" : "View Candidates"}
               </button>
             </div>
             {/* Show candidates if the job has been selected */}
             {selectedJobId === job._id && (
               <div className="mt-4">
-                <h3 className="text-lg font-semibold">Applied Candidates</h3>
+                <h3 className="text-lg font-semibold mb-2 text-red-800">
+                  Applied Candidates
+                </h3>
                 {candidates.length > 0 ? (
                   <ul className="list-disc list-inside">
                     {candidates.map((application) => (
                       // console.log(application.jobseeker.resume)
-                      <li key={application._id}>
-                        <div className="flex flex-col">
-                          <span>
+                      <li key={application._id} className="list-none">
+                        <div className="flex flex-col  ">
+                          <span className="font-mono text-zinc-700 ">
                             {application.jobseeker.name} -{" "}
                             {application.jobseeker.email}
                           </span>
@@ -154,7 +159,7 @@ const EmployerProfileJobs = () => {
                               href={application.resume} // Use the resume URL from the response
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-blue-500 underline"
+                              className="text-blue-500 underline font-medium"
                             >
                               View Resume
                             </a>

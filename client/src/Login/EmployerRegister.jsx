@@ -5,7 +5,6 @@ import "./Register.css";
 import { useState } from "react";
 
 function EmployerRegister() {
-
   const [imageBase64, setImageBase64] = useState("");
 
   // Convert the image to Base64 when selected
@@ -20,7 +19,6 @@ function EmployerRegister() {
     }
   };
 
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -29,23 +27,26 @@ function EmployerRegister() {
     const data = Object.fromEntries(formData);
 
     try {
-      const response = await axios.post("http://localhost:8000/api/employer/register", {
-        email: data.email,
-        password: data.password,
-        name: data.name,
-        companyName: data.companyName,
-        address: data.address,
-        city: data.city,
-        state: data.state,
-        country: data.country,
-        pincode: data.pincode,
-        positionType: data.positionType,
-        socialMediaLink: data.socialMediaLink,
-        hiringManager: data.hiringManager,
-        phone: data.phone,
-        employees: data.employees,
-        profilePicture: imageBase64,
-      });
+      const response = await axios.post(
+        "http://localhost:8000/api/employer/register",
+        {
+          email: data.email,
+          password: data.password,
+          name: data.name,
+          companyName: data.companyName,
+          address: data.address,
+          city: data.city,
+          state: data.state,
+          country: data.country,
+          pincode: data.pincode,
+          positionType: data.positionType,
+          socialMediaLink: data.socialMediaLink,
+          hiringManager: data.hiringManager,
+          phone: data.phone,
+          employees: data.employees,
+          profilePicture: imageBase64,
+        }
+      );
 
       if (response.status === 200) {
         alert("Employer registered successfully");
@@ -60,13 +61,20 @@ function EmployerRegister() {
   };
 
   return (
-    <div className="container-full min-h-[100vh]">
-      <div className="register-container min-h-[100vh]">
+    <div className=" flex flex-col justify-center items-center w-full min-h-[100vh]">
+      {/* container-full */}
+      <div className=" flex flex-col justify-center items-center border-4 p-5  min-h-[100vh]">
+      {/* register-container */}
         <div className="text-2xl">Employer Registration</div>
         <form onSubmit={handleSubmit}>
-        <label>
+          <label>
             Your Profile Pic to be displayed
-            <input type="file" name="profilePicture" onChange={handleImageChange} required />
+            <input
+              type="file"
+              name="profilePicture"
+              onChange={handleImageChange}
+              required
+            />
           </label>
           <label>
             Company Name*
@@ -183,7 +191,7 @@ function EmployerRegister() {
             Password*
             <input type="password" name="password" required />
           </label>
-          
+
           <button type="submit" className="continue-button">
             Register
           </button>
