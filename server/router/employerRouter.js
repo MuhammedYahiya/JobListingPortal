@@ -13,6 +13,7 @@ const {
   editJob,
   getAppliedCandidates,
   updateApplicationStatus,
+  deleteJob,
 } = require("../controller/employerController");
 const { isAuthenticatedEmployer } = require("../middleware/auth");
 const upload = require("../config/multerConfig");
@@ -40,6 +41,10 @@ router
 router
   .route("/employer/application/:applicationId/status")
   .put(isAuthenticatedEmployer, updateApplicationStatus);
+
+router
+  .route("/employer/job/delete/:jobId")
+  .delete(isAuthenticatedEmployer, deleteJob); 
 
 router.route("/verify-token").get(async (req, res, next) => {
   const { token } = req.cookies;
