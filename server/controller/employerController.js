@@ -216,6 +216,29 @@ exports.editJob = async (req, res) => {
   }
 };
 
+exports.deleteJob = async (req, res) => {
+  try {
+    const job = await Job.findOneAndDelete({
+      _id: req.params.jobId,
+      employer: req.user._id
+    });
+
+    if (!job) {
+      return res
+        .status(404)
+        .json({
+          success: false,
+          error: "Job not found or you are not authorized to delete this job"
+        });
+    }
+
+    res.status(200).json({ success: true, message: "Job deleted successfully" });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+
 exports.getAppliedCandidates = async (req, res) => {
   try {
     const applications = await Application.find({ job: req.params.jobId })
