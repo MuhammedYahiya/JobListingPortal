@@ -3,7 +3,7 @@
 /* Full-width container */
 .container-full {
   width: 100%;
-  min-height: 100vh; /* Adjusted to minimum height */
+  /* min-height: 100vh; Adjusted to minimum height */
   display: flex;
   flex-direction: column;
   background-color: #f9f9f9;
@@ -18,7 +18,7 @@
   align-items: center;
   justify-content: flex-start;
   padding: 20px;
-  min-height: 100vh; /* Ensure it takes the whole screen height */
+  /* min-height: 100vh; Ensure it takes the whole screen height */
   box-sizing: border-box;
   overflow-y: auto;
 }
