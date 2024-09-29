@@ -102,7 +102,7 @@ const CompanyCreate = () => {
               type="submit"
               className="bg-blue-500 text-white cursor-pointer p-2 rounded-md hover:bg-blue-700 "
             >
-              Add JOb
+              Add Job
             </button>
           </div>
         </form>

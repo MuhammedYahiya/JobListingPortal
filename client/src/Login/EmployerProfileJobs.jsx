@@ -43,7 +43,7 @@ const EmployerProfileJobs = () => {
 
   const handleDelete = async (jobId) => {
     try {
-      await axios.delete(`http://localhost:8000/api/employer/jobs/${jobId}`, {
+      await axios.delete(`http://localhost:8000/api/employer/job/delete/${jobId}`, {
         withCredentials: true,
       });
       // Remove job from state after successful deletion
