@@ -69,7 +69,7 @@ const EmployerDash = () => {
   return (
     <div>
       <div>
-        <ul className="flex font-semibold items-center gap-5 p-4 justify-end mr-5">
+        <ul className="flex font-semibold items-center gap-5 p-4 justify-end mr-5 font-serif">
           <li className="hover:cursor-pointer hover:text-xl hover:text-teal-600">
             Home
           </li>
@@ -120,7 +120,7 @@ const EmployerDash = () => {
               {jobs.map((job, index) => (
                 <tr key={job._id} className="bg-white hover:bg-gray-200">
                   <td className="p-4">{index + 1}</td>
-                  <td className="text-black">{job.companyName}</td>
+                  <td className="text-black font-semibold uppercase tracking-wider font-sans">{job.companyName}</td>
                   <td>{job.date}</td>
                   <td>
                     <div

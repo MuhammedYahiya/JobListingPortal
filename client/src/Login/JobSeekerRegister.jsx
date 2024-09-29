@@ -48,11 +48,16 @@ function JobSeekerRegister() {
   };
 
   return (
-    <div  className="p-4 ">
+    <div className="p-4 ">
       <div className="flex flex-col justify-center items-center w-full h-screen">
         <div className=" flex flex-col  border-4 p-5 overflow-y-scroll  min-h-[100vh] border-gray-300 custom-scrollbar w-[70%] shadow-[2px_2px_5px_1px_rgba(0,0,0,0.3)]">
-          <div className="flex text-4xl font-bold text-zinc-500 p-2 mb-5 text-stroke-3 bg-gray-600 tracking-wider justify-center">Job Seeker Registration</div>
-          <form onSubmit={handleSubmit} className="flex items-center justify-center">
+          <div className="flex text-4xl font-bold text-zinc-500 p-2 mb-5 text-stroke-3 bg-gray-600 tracking-wider justify-center">
+            Job Seeker Registration
+          </div>
+          <form
+            onSubmit={handleSubmit}
+            className="flex items-center justify-center"
+          >
             <label className="font-semibold text-blue-800">
               Your Name*
               <input
@@ -88,7 +93,13 @@ function JobSeekerRegister() {
 
             <label className="font-semibold text-blue-800">
               State*
-              <input type="text" name="state" required placeholder="eg: IL" className=" text-gray-500 tracking-wider font-serif font-normal outline-gray-400"/>
+              <input
+                type="text"
+                name="state"
+                required
+                placeholder="eg: IL"
+                className=" text-gray-500 tracking-wider font-serif font-normal outline-gray-400"
+              />
             </label>
 
             <label className="font-semibold text-blue-800">
@@ -166,7 +177,12 @@ function JobSeekerRegister() {
 
             <label className="font-semibold text-blue-800">
               Resume
-              <input type="file" name="resume" accept=".pdf,.doc,.docx" className=" text-gray-500 tracking-wider font-serif font-normal outline-gray-400"/>
+              <input
+                type="file"
+                name="resume"
+                accept=".pdf,.doc,.docx"
+                className=" text-gray-500 tracking-wider font-serif font-normal outline-gray-400"
+              />
             </label>
 
             <label className="font-semibold text-blue-800">
