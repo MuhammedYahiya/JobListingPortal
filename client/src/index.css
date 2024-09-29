@@ -9,7 +9,33 @@
 }
 
 .gradient-text {
-    background: linear-gradient(90deg, rgba(0, 212, 255, 1) 9%, rgba(80, 80, 241, 1) 32%, rgba(2, 0, 36, 1) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+  background: linear-gradient(
+    90deg,
+    rgba(0, 212, 255, 1) 9%,
+    rgba(80, 80, 241, 1) 32%,
+    rgba(2, 0, 36, 1) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgb(152, 152, 153);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(158, 158, 160, 0.8);
+}
+
+
+/* shadow-[10px_10px_1px_5px_rgba(0,0,0,0.3)] */
