@@ -1,23 +1,50 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../../../Login/UserContext";
+import axios from "axios";
 import Leftsidebar from "../Leftsidebar";
 import "./ProfilePage.css";
 
 const ProfilePage = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext); // Access user and setUser from UserContext
   const [isEditing, setIsEditing] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
 
   const [userData, setUserData] = useState({
-    name: user.name || "John Doe",
-    about: user.about || "I am a highly motivated job seeker with a passion for my field.",
-    age: user.age || "N/A",
-    location: user.location || "Unknown",
-    image: user.image || "https://via.placeholder.com/150",
-    linkedinLink: user.linkedinLink || "",
-    resume: user.resume || null,
-    skills: user.skills || ["Skill 1", "Skill 2", "Skill 3"],
+    name: user?.name || "",
+    about: user?.about || "",
+    age: user?.age || "",
+    location: user?.location || "",
+    image: user?.profilePicture || "https://via.placeholder.com/150",
+    linkedinLink: user?.linkedinLink || "",
+    resume: null,
+    skills: user?.skills || [],
   });
+
+  // Fetch profile data if not available in the context (fallback)
+  useEffect(() => {
+    if (!user) {
+      const fetchProfileData = async () => {
+        try {
+          const response = await axios.get("/api/profile");
+          const profileData = response.data;
+          setUserData({
+            name: profileData.name,
+            about: profileData.about,
+            age: profileData.age,
+            location: profileData.location,
+            image: profileData.profilePicture || "https://via.placeholder.com/150",
+            linkedinLink: profileData.linkedinLink,
+            resume: profileData.resume,
+            skills: profileData.skills,
+          });
+          setUser(profileData); // Update context with fetched data
+        } catch (error) {
+          console.error("Error fetching profile data:", error);
+        }
+      };
+      fetchProfileData();
+    }
+  }, [user, setUser]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -65,19 +92,35 @@ const ProfilePage = () => {
     }
   };
 
-  const handleSave = () => {
-    const saveUserData = async () => {
-      try {
-        // Example API call to save data
-        setUser(userData);
-        alert("Profile updated successfully!");
-      } catch (error) {
-        alert("Error updating profile: " + error.message);
+  const handleSave = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("name", userData.name);
+      formData.append("about", userData.about);
+      formData.append("age", userData.age);
+      formData.append("location", userData.location);
+      formData.append("linkedinLink", userData.linkedinLink);
+      formData.append("skills", JSON.stringify(userData.skills));
+      if (userData.resume) {
+        formData.append("resume", userData.resume);
       }
-    };
+      if (userData.image) {
+        formData.append("profilePicture", userData.image);
+      }
 
-    saveUserData();
-    setIsEditing(false);
+      const response = await axios.put("/api/profile", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      setUser(response.data.jobseeker); // Update context with new profile data
+      alert("Profile updated successfully!");
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Error updating profile: " + error.message);
+    }
   };
 
   const handleEditToggle = () => {
@@ -107,13 +150,11 @@ const ProfilePage = () => {
         <div className="main-info-container">
           <div className="about-details-container">
             <div className="about-blue-box">
-              {/* Profile Image */}
               <img
                 src={imageLoading ? "https://via.placeholder.com/150" : userData.image}
                 alt="Profile"
                 className="profile-image"
               />
-              {/* Image Upload Input */}
               {isEditing && (
                 <div className="image-upload">
                   <label>
@@ -122,7 +163,6 @@ const ProfilePage = () => {
                   </label>
                 </div>
               )}
-              {/* About Text */}
               <div className="about-text">
                 {!isEditing ? (
                   <p>{userData.about}</p>
@@ -136,7 +176,6 @@ const ProfilePage = () => {
                 )}
               </div>
 
-              {/* Age and Location */}
               <div className="profile-info">
                 <label>
                   Age:
@@ -185,7 +224,6 @@ const ProfilePage = () => {
             </div>
           </div>
 
-          {/* Skills Section */}
           <div className="skills-container">
             <h3 className="skills-title">Skills</h3>
             <ul className="skills-list">
@@ -220,7 +258,6 @@ const ProfilePage = () => {
           </div>
         </div>
 
-        {/* Resume Upload */}
         <div className="resume-upload">
           <label>Upload Resume: </label>
           {!isEditing ? (
@@ -243,7 +280,6 @@ const ProfilePage = () => {
           )}
         </div>
 
-        {/* Edit/Save Button for Entire Profile */}
         <div className="edit-save-buttons">
           <button className="edit-button" onClick={handleEditToggle}>
             {isEditing ? "Cancel" : "Edit Profile"}

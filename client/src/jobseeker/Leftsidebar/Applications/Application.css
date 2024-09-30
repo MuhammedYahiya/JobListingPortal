@@ -1,28 +1,64 @@
+/* Application.css */
+
 .application-container {
-    padding: 20px;
-  }
-  
-  .applications-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .applications-table th, .applications-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-  }
-  
-  .applications-table th {
-    background-color: #f4f4f4;
-  }
-  
-  .applications-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .applications-table tr:hover {
-    background-color: #f1f1f1;
-  }
-  
+  width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f0f8ff; /* Light blue background */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.application-container h1 {
+  text-align: center;
+  color: #003366; /* Dark blue for heading */
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+.applications-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.applications-table th, .applications-table td {
+  border: 1px solid #003366; /* Dark blue borders */
+  padding: 12px 15px;
+  text-align: left;
+  color: #003366; /* Dark blue text for table content */
+  font-size: 1rem;
+}
+
+.applications-table th {
+  background-color: #003366; /* Dark blue background for table header */
+  color: #fff; /* White text for header */
+  font-weight: bold;
+}
+
+.applications-table tr:nth-child(even) {
+  background-color: #e6f2ff; /* Light blue for even rows */
+}
+
+.applications-table tr:hover {
+  background-color: #b3d9ff; /* Hover effect with medium blue */
+}
+
+.applications-table td {
+  background-color: #f0f8ff; /* Matching table background with container */
+}
+
+.applications-table tr td:first-child {
+  font-weight: bold;
+}
+
+.applications-table th, .applications-table td {
+  text-align: center;
+}
+
+p {
+  text-align: center;
+  color: #003366; /* Dark blue text */
+  font-size: 1.2em;
+  margin-top: 20px;
+}
