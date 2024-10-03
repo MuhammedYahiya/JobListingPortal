@@ -23,6 +23,7 @@ function JobSeekerRegister() {
           email: data.email,
           password: data.password,
           name: data.name,
+          age: data.age,
           address: data.address,
           city: data.city,
           state: data.state,
@@ -65,6 +66,17 @@ function JobSeekerRegister() {
                 name="name"
                 required
                 placeholder="e.g., Jane Doe"
+                className=" text-gray-500 tracking-wider font-serif font-normal outline-gray-400"
+              />
+            </label>
+
+            <label className="font-semibold text-blue-800">
+              Your Age*
+              <input
+                type="number"
+                name="age"
+                required
+                placeholder="e.g., 23"
                 className=" text-gray-500 tracking-wider font-serif font-normal outline-gray-400"
               />
             </label>

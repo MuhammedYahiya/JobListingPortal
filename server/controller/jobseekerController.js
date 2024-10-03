@@ -23,6 +23,7 @@ exports.registerJobSeeker = async (req, res) => {
 
     const newUser = new jobseeker({
       name: req.body.name,
+      age: req.body.age,
       email: req.body.email,
       password: hashPassword,
       address: req.body.address,
@@ -75,6 +76,7 @@ exports.updateProfile = async (req, res) => {
 
     const {
       email,
+      age,
       address,
       jobtitlename,
       city,
@@ -85,7 +87,9 @@ exports.updateProfile = async (req, res) => {
       socialMediaLink,
     } = req.body;
 
-    const profilePicture = req.file;
+    const profilePicture =  req.files.profilePicture[0];
+    
+   
 
     if (email) {
       const existingUser = await jobseeker.findOne({ email });
@@ -98,6 +102,7 @@ exports.updateProfile = async (req, res) => {
 
     let updateData = {
       email,
+      age,
       address,
       jobtitlename,
       city,
@@ -113,10 +118,25 @@ exports.updateProfile = async (req, res) => {
         const result = await cloudinary.uploader.upload(profilePicture.path);
         fs.unlinkSync(profilePicture.path);
         updateData.profilePicture = result.secure_url;
+        // console.log("result",result);
       } catch (cloudinaryError) {
         return res
           .status(500)
           .json({ message: "Error uploading image to Cloudinary" });
+      }
+    }
+
+    if (req.files && req.files.resume) {
+      try {
+        const resumeResult = await cloudinary.uploader.upload(req.files.resume[0].path, {
+          resource_type: "raw"
+        });
+        fs.unlinkSync(req.files.resume[0].path);
+        updateData.resume = resumeResult.secure_url;
+        console.log(resumeResult.secure_url);
+      } catch (cloudinaryError) {
+        console.error("Resume upload error:", cloudinaryError);
+        return res.status(500).json({ message: "Error uploading resume" });
       }
     }
 

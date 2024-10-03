@@ -10,6 +10,11 @@ const jobseekerSchema = new Schema({
       required: [true, 'Name is required'],
       trim: true,
     },
+    age: {
+      type: Number,
+      required: [true, 'Name is required'],
+      trim: true,
+    },
     
     email: {
       type: String,
@@ -57,6 +62,11 @@ const jobseekerSchema = new Schema({
       trim: true,
     },
     profilePicture: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+    resume: {
       type: String,
       trim: true,
       default: '',

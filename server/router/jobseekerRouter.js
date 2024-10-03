@@ -14,7 +14,10 @@ const router = express.Router();
 
 router.route("/jobseeker/register").post(registerJobSeeker);
 router.route("/jobseeker/login").post(loginJobSeeker);
-router.route("/jobseeker/update").put(isAuthenticatedJobSeeker, upload.single('profilePicture'), updateProfile)
+router.route("/jobseeker/update").put(isAuthenticatedJobSeeker, upload.fields([
+  { name: 'profilePicture', maxCount: 1 },
+  { name: 'resume', maxCount: 1 }
+]), updateProfile)
 
 router.route("/jobs").get(isAuthenticatedJobSeeker,getAllJobs);
 router.route("/job/:jobId").get(isAuthenticatedJobSeeker,getJobById);
