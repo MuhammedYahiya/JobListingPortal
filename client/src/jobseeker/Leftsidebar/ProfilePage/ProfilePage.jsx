@@ -261,7 +261,7 @@ const ProfilePage = () => {
                 <label>
                   Location:
                   {!isEditing ? (
-                    <span>{userData.location}</span>
+                    <span> {userData.city}, {userData.state}, {userData.location}</span>
                   ) : (
                     <input
                       name="location"
@@ -316,10 +316,12 @@ const ProfilePage = () => {
                           handleSkillsChange(index, e.target.value)
                         }
                         className="edit-skill-input"
+                        placeholder="Enter skill"
                       />
                       <button
                         onClick={() => handleDeleteSkill(index)}
                         className="delete-skill-button"
+                        title="Delete skill"
                       >
                         ×
                       </button>
