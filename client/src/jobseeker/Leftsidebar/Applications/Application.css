@@ -1,5 +1,6 @@
 .application-container {
-    padding: 20px;
+    
+    display: flex;
   }
   
   .applications-table {
