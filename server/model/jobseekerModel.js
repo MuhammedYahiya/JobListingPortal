@@ -71,6 +71,10 @@ const jobseekerSchema = new Schema({
       trim: true,
       default: '',
     },
+    skills: {
+      type: [String],
+      default: []
+    },
     createdAt: {
       type: Date,
       default: Date.now,

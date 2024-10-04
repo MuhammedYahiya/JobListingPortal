@@ -70,80 +70,64 @@ exports.loginJobSeeker = async (req, res) => {
   }
 };
 
+
 exports.updateProfile = async (req, res) => {
   try {
     const userId = req.user.id;
+    let updateData = {};
 
-    const {
-      email,
-      age,
-      address,
-      jobtitlename,
-      city,
-      state,
-      country,
-      pincode,
-      positionType,
-      socialMediaLink,
-    } = req.body;
-
-    const profilePicture =  req.files.profilePicture[0];
+    // Only add fields to updateData if they exist in req.body
+    const fields = [
+      'email', 'age', 'address', 'jobtitlename', 'city', 'state', 
+      'country', 'pincode', 'positionType', 'socialMediaLink'
+    ];
     
-   
+    fields.forEach(field => {
+      if (req.body[field] !== undefined) {
+        updateData[field] = req.body[field];
+      }
+    });
 
-    if (email) {
-      const existingUser = await jobseeker.findOne({ email });
-      if (existingUser && existingUser._id.toString() !== userId) {
-        return res
-          .status(409)
-          .json({ message: "Email is already in use by another account" });
+    if (req.body.skills) {
+      try {
+        const skillsArray = JSON.parse(req.body.skills);
+        if (Array.isArray(skillsArray)) {
+          updateData.skills = skillsArray;
+        }
+      } catch (e) {
+        console.error('Error parsing skills:', e);
       }
     }
 
-    let updateData = {
-      email,
-      age,
-      address,
-      jobtitlename,
-      city,
-      state,
-      country,
-      pincode,
-      positionType,
-      socialMediaLink,
-    };
-
-    if (profilePicture) {
-      try {
-        const result = await cloudinary.uploader.upload(profilePicture.path);
-        fs.unlinkSync(profilePicture.path);
+    // Handle file uploads only if files are present
+    if (req.files) {
+      if (req.files.profilePicture) {
+        const result = await cloudinary.uploader.upload(req.files.profilePicture[0].path);
         updateData.profilePicture = result.secure_url;
-        // console.log("result",result);
-      } catch (cloudinaryError) {
-        return res
-          .status(500)
-          .json({ message: "Error uploading image to Cloudinary" });
+        fs.unlinkSync(req.files.profilePicture[0].path);
       }
-    }
-
-    if (req.files && req.files.resume) {
-      try {
-        const resumeResult = await cloudinary.uploader.upload(req.files.resume[0].path, {
-          resource_type: "raw"
-        });
-        fs.unlinkSync(req.files.resume[0].path);
+      
+      if (req.files.resume) {
+        const resumeResult = await cloudinary.uploader.upload(
+          req.files.resume[0].path,
+          { resource_type: "raw" }
+        );
         updateData.resume = resumeResult.secure_url;
-        console.log(resumeResult.secure_url);
-      } catch (cloudinaryError) {
-        console.error("Resume upload error:", cloudinaryError);
-        return res.status(500).json({ message: "Error uploading resume" });
+        fs.unlinkSync(req.files.resume[0].path);
       }
     }
 
-    Object.keys(updateData).forEach(
-      (key) => updateData[key] === undefined && delete updateData[key]
-    );
+    // If no updates are needed, return current user data
+    if (Object.keys(updateData).length === 0) {
+      const currentUser = await jobseeker.findById(userId);
+      return res.status(200).json({
+        success: true,
+        message: "No changes detected",
+        jobseeker: currentUser
+      });
+    }
 
+    // Perform update
     const updatedJobseeker = await jobseeker.findByIdAndUpdate(
       userId,
       updateData,
@@ -154,21 +138,27 @@ exports.updateProfile = async (req, res) => {
     );
 
     if (!updatedJobseeker) {
-      return res.status(404).json({ message: "Jobseeker not found" });
+      return res.status(404).json({
+        success: false,
+        message: "Jobseeker not found"
+      });
     }
 
-    res
-      .status(200)
-      .json({
-        message: "Profile updated successfully",
-        jobseeker: updatedJobseeker,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      jobseeker: updatedJobseeker,
+    });
+    
   } catch (error) {
     console.error("Server error:", error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };
-
 
 
 exports.getAllJobs = async (req, res) => {

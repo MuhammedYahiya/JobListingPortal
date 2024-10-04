@@ -54,15 +54,8 @@ const ProfilePage = () => {
     setUserData({ ...userData, skills: updatedSkills });
   };
 
-  // const handleResumeUpload = (e) => {
-  //   const file = e.target.files[0];
-  //   setUserData({ ...userData, resume: file });
-  // };
-
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-
-    console.log("Selected file:", file); 
 
     if (!file || !file.type.startsWith("image/")) {
       alert("Please upload a valid image file.");
@@ -71,13 +64,11 @@ const ProfilePage = () => {
     setImageLoading(true);
     setSelectedImage(file);
 
-    console.log("Set selected image:", file);
     const reader = new FileReader();
 
     reader.onloadend = () => {
       setUserData({ ...userData, image: reader.result });
       setImageLoading(false);
-      console.log("Image preview updated"); 
     };
 
     if (file) {
@@ -87,7 +78,6 @@ const ProfilePage = () => {
 
   const handleResumeUpload = (e) => {
     const file = e.target.files[0];
-    console.log("Selected resume file:", file); // Debug log
 
     if (!file) {
       alert("Please select a file");
@@ -95,7 +85,11 @@ const ProfilePage = () => {
     }
 
     // Validate file type if needed
-    const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    const allowedTypes = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ];
     if (!allowedTypes.includes(file.type)) {
       alert("Please upload a PDF or Word document");
       return;
@@ -110,36 +104,48 @@ const ProfilePage = () => {
 
     setSelectedResume(file);
     setResumeFileName(file.name);
-    console.log("Resume file set:", file.name); // Debug log
   };
 
   const handleSave = () => {
     const saveUserData = async () => {
       try {
         const formData = new FormData();
-        console.log("Creating FormData...");  
+        let hasChanges = false;
 
-        formData.append("email", user.email);
-        formData.append("age", userData.age);
-        formData.append("address", user.address || "");
-        formData.append("jobtitlename", user.jobtitlename || "");
-        formData.append("city", user.city || "");
-        formData.append("state", user.state || "");
-        formData.append("country", userData.location);
-        formData.append("pincode", user.pincode || "");
-        formData.append("positionType", user.positionType || "");
-        formData.append("socialMediaLink", userData.linkedinLink);
+        if (JSON.stringify(userData.skills) !== JSON.stringify(user.skills)) {
+          formData.append("skills", JSON.stringify(userData.skills));
+          hasChanges = true;
+        }
 
+        // Only append values that have actually changed
+        if (userData.age !== user.age) {
+          formData.append("age", userData.age);
+          hasChanges = true;
+        }
+        if (userData.location !== user.country) {
+          formData.append("country", userData.location);
+          hasChanges = true;
+        }
+        if (userData.linkedinLink !== user.socialMediaLink) {
+          formData.append("socialMediaLink", userData.linkedinLink);
+          hasChanges = true;
+        }
+
+        // Handle file uploads
         if (selectedImage) {
           formData.append("profilePicture", selectedImage);
-          console.log("Added profilePicture to FormData:", selectedImage);
+          hasChanges = true;
         }
-
         if (selectedResume) {
           formData.append("resume", selectedResume);
-          console.log("Added resume to FormData:", selectedResume.name);
+          hasChanges = true;
         }
 
+        // If no changes, just close edit mode
+        if (!hasChanges) {
+          setIsEditing(false);
+          return;
+        }
 
         const response = await axios.put(
           "http://localhost:8000/api/jobseeker/update",
@@ -293,14 +299,16 @@ const ProfilePage = () => {
           <div className="skills-container">
             <h3 className="skills-title">Skills</h3>
             <ul className="skills-list">
-              {!isEditing
-                ? userData.skills.map((skill, index) => (
-                    <li key={index} className="skill-item">
-                      {skill}
-                    </li>
-                  ))
-                : userData.skills.map((skill, index) => (
-                    <li key={index} className="skill-item">
+              {!isEditing ? (
+                userData.skills.map((skill, index) => (
+                  <li key={index} className="skill-item">
+                    {skill}
+                  </li>
+                ))
+              ) : (
+                <>
+                  {userData.skills.map((skill, index) => (
+                    <li key={index} className="skill-item-edit">
                       <input
                         type="text"
                         value={skill}
@@ -310,19 +318,19 @@ const ProfilePage = () => {
                         className="edit-skill-input"
                       />
                       <button
-                        className="delete-skill-button"
                         onClick={() => handleDeleteSkill(index)}
+                        className="delete-skill-button"
                       >
-                        Delete
+                        ×
                       </button>
                     </li>
                   ))}
+                  <button onClick={handleAddSkill} className="add-skill-button">
+                    + Add Skill
+                  </button>
+                </>
+              )}
             </ul>
-            {isEditing && (
-              <button className="add-skill-button" onClick={handleAddSkill}>
-                Add Skill
-              </button>
-            )}
           </div>
         </div>
 

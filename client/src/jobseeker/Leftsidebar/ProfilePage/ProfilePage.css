@@ -67,13 +67,13 @@
   margin-bottom: 5px;
 }
 
-.edit-skill-input {
+/* .edit-skill-input {
   width: 100%;
   padding: 5px;
   margin-right: 10px;
-}
+} */
 
-.delete-skill-button {
+/* .delete-skill-button {
   background-color: #ff4d4d;
   color: white;
   border: none;
@@ -81,9 +81,9 @@
   padding: 5px 10px;
   cursor: pointer;
 
-}
+} */
 
-.add-skill-button {
+/* .add-skill-button {
   margin-top: 10px;
   padding: 5px 10px;
   background-color: #28a745;
@@ -91,7 +91,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
+} */
 
 .edit-save-buttons {
   display: flex;
@@ -140,5 +140,41 @@
 
 .resume-link:hover {
   text-decoration: none;
+}
+
+.skill-item-edit {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.edit-skill-input {
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.delete-skill-button {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-skill-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
